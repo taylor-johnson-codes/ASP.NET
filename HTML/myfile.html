@@ -7,7 +7,6 @@
         <!-- Can still add your own CSS: -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia"> 
         <link rel="stylesheet" href="myStyle.css">
-
     </head>
 
     <body>
@@ -22,6 +21,11 @@
                 </ul>
             </div>
         </nav>
+        <br>
+
+        <button onclick="whiteBackground()">Choose white background</button>
+        <button onclick="aquaBackground()">Choose aqua background</button>
+        <br>
 
         <h1 class="firstClass">Student Information</h1>
 
@@ -84,7 +88,30 @@
         </table>
         <br>
 
-        <button type="button">Click me!</button>
+        <p id="paraColor">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, officia odit. Deleniti maiores molestiae explicabo.</p>
 
+        <button type="button" id="btnID" onclick="ChooseRed()">Click for red text</button>
+
+        <button type="button" ondblclick="ChoosePurple()">Double click for purple text</button>
+
+        <!-- JavaScript -->
+        <script>
+            function whiteBackground(){
+                document.body.style.background="white";
+            }
+            function aquaBackground(){
+                document.body.style.background="aqua";
+            }
+            
+            function ChooseRed(){
+                document.getElementById("paraColor").style.color="red";
+            }
+            function ChoosePurple(){
+                document.getElementById("paraColor").style.color="purple";
+            }
+            
+            // Alternative method:
+            // document.getElementById("btnID").onclick=ChooseRed;
+        </script>
     </body>
 </html>
