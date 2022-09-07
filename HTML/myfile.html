@@ -2,14 +2,57 @@
 <html>
     <head>
         <title>Student Information: Taylor Johnson</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia"> 
+        <style>
+            body{
+                background-color: lightblue;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            h1{
+                text-align: center;
+                color: red;
+            }
+
+            p{
+                background-color: lightgray;
+                width: 500px;
+                border: 15px solid green;
+                padding: 50px;
+                margin: 30px;
+            }
+
+            #para2{
+                background-color: yellow;}
+
+            .firstClass{text-align: right;}
+
+            p::first-letter{color:red;
+                font-weight: bold;
+                font-size: x-large;
+            }
+
+            /* for highlighting text in broswer */
+            ::selection{background-color: aqua;}
+
+            /* h1,h2,h3,h4{font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;} */
+
+            /* able to find sofia Google font due to link tag above style tag */
+            h1,h2,h3,h4{font-family: sofia;}
+
+
+
+        </style>
     </head>
 
     <body>
-        <h1>Student Information</h1>
+        <h1 class="firstClass">Student Information</h1>
 
-        <h2>Taylor Johnson</h2>
+        <h2 class="firstClass">Taylor Johnson</h2>
 
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae, tempore eveniet ipsam incidunt autem dolorum soluta, ea, nemo cumque maiores laborum blanditiis aliquid sint dolores libero. Error cum quo nihil.</p>
+        <p class="firstClass">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae, tempore eveniet ipsam incidunt autem dolorum soluta, ea, nemo cumque maiores laborum blanditiis aliquid sint dolores libero. Error cum quo nihil.</p>
+
+        <p id="para2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae, tempore eveniet ipsam incidunt autem dolorum soluta, ea, nemo cumque maiores laborum blanditiis aliquid sint dolores libero. Error cum quo nihil.</p>
 
         <a href="https://www.google.com" target="_blank">Take me to Google</a>
         <br>
