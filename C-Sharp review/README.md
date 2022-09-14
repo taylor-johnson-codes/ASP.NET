@@ -1,2 +1,2 @@
-- Coded in Visual Studio 2022, .NET 6.0 framework
+- Coded in Visual Studio Community 2022, .NET 6.0 framework
 - Click on folder, then click on .cs files to view code
