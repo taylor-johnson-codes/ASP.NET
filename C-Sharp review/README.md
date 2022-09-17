@@ -1,2 +1,2 @@
 - Coded in Visual Studio Community 2022, .NET 6.0 framework
-- Click on folder, then click on .cs files to view code
+- To view code, click on the C-Sharp review folder, then click on the .cs files 
