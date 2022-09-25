@@ -2,12 +2,12 @@
 // The namespace{}/class{}/Main(){} statements that older versions of .NET showed are still there in the background of the Program.cs file
 // (The compiler generates a class and Main method entry point for the application)
 
-// MIDDLEWARE PIPELINE SECTION (handles HTTP requests and responses)
+// ------------------------------- MIDDLEWARE PIPELINE (handles HTTP requests and responses) -------------------------------
 
 var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
 var app = builder.Build();  // sets up middleware components
 
-app.UseDefaultFiles();  // needed to serve default.html file in wwwroot folder
+app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
 
 app.UseStaticFiles();  // to enable the use of static files
 // static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
@@ -25,6 +25,28 @@ For every HTTP request that is being received, the ASP.NET Core platform:
 - creates an object (called Response) that will be sent back. 
 - These objects are properties of an object called "context"
 */
+
+
+// ---------------------------------------------------- Map() SECTION ----------------------------------------------------
+
+static void HandleMenuRequest(IApplicationBuilder app)
+{
+    app.Run(async context =>
+    { await context.Response.WriteAsync("Menu page isn't set up yet. :( "); });
+}
+
+static void HandleHoursRequest(IApplicationBuilder app)
+{
+    app.Run(async context =>
+    { await context.Response.WriteAsync("Hours page isn't set up yet. :( "); });
+}
+
+app.Map("/menu.html", HandleMenuRequest);
+app.Map("/hours.html", HandleHoursRequest);
+
+
+// ------------------------------------------------- Use() & Run() SECTION -------------------------------------------------
+
 
 // Use() allows the parameter "next" to reference the next middleware in the pipeline
 app.Use(
