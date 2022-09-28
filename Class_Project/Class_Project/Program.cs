@@ -2,16 +2,51 @@
 // The namespace{}/class{}/Main(){} statements that older versions of .NET showed are still there in the background of the Program.cs file
 // (The compiler generates a class and Main method entry point for the application)
 
+var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
+
+builder.Services.AddControllersWithViews();  // for adding MVC into the project
+
 // ------------------------------- MIDDLEWARE PIPELINE (handles HTTP requests and responses) -------------------------------
 
-var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
 var app = builder.Build();  // sets up middleware components
 
-app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
+//app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
+                         // not needed after upgrading project to MVC
 
 app.UseStaticFiles();  // to enable the use of static files
-// static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
-// wwwroot is just a folder known as the project's web root directory
+                       // static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
+                       // wwwroot is just a folder known as the project's web root directory
+
+// for adding MVC into the project:
+// (conventional routing)
+
+app.UseRouting();
+
+app.MapControllerRoute(
+    name: "anotherRoute",
+    pattern: "Display/{id}",
+    defaults: new { controller = "Student", action = "Show"}
+    );
+
+//app.MapDefaultControllerRoute();
+
+// default route:
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"  // default route; NO SPACES in the pattern URL; ? is an optional segment
+    );
+
+app.MapControllerRoute(
+    name: "catchAll",
+    pattern: "{*whatever}",
+    defaults: new { controller = "Student", action = "Index" }
+    );
+
+app.Run();
+
+
+
+/* Commenting the rest out since we're upgrading this project to MVC
 
 // This is the default middleware component created from spinning up the project; we'll use our own middleware components instead
 //app.MapGet("/", () => "Hello World!");  // "Hello World" will only be printed on the homepage due to "/"
@@ -19,13 +54,10 @@ app.UseStaticFiles();  // to enable the use of static files
 // The single request delegate/anonymous function is called in response to every HTTP request (not just the homepage request)
 //app.Run(async context => { await context.Response.WriteAsync("Hello SMU"); });  // async and await are paired keywords
 
-/*
-For every HTTP request that is being received, the ASP.NET Core platform:
-- creates an object (called Request) that contains information about the request, and
-- creates an object (called Response) that will be sent back. 
-- These objects are properties of an object called "context"
-*/
-
+//For every HTTP request that is being received, the ASP.NET Core platform:
+//- creates an object (called Request) that contains information about the request, and
+//- creates an object (called Response) that will be sent back. 
+//- These objects are properties of an object called "context"
 
 // ---------------------------------------------------- Map() SECTION ----------------------------------------------------
 
@@ -69,6 +101,7 @@ app.Use(
 app.Run(async context => { await context.Response.WriteAsync("Run() called\n"); });
 
 app.Run();  // terminates the pipeline
+*/
 
 /* Output:
 Middleware component 1 start
