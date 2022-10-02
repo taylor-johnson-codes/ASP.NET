@@ -17,10 +17,14 @@ app.UseStaticFiles();  // to enable the use of static files
                        // static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
                        // wwwroot is just a folder known as the project's web root directory
 
-// for adding MVC into the project:
-// (conventional routing)
+// The following code is adding MVC into the project with conventional routing
 
-app.UseRouting();
+// Conventional routing is defined in Program.cs for one central location
+// Conventional routing is order-dependent; top = highest priority, bottom = lowest priority
+// Once a route is matched, it doesn't look at any other routes
+// Conventional routing is shown below and is what we'll use; examples of attribute routing for learning purposes is shown in StudentController.cs
+
+app.UseRouting();  // routing maps requests to actions
 
 app.MapControllerRoute(
     name: "anotherRoute",
@@ -28,6 +32,7 @@ app.MapControllerRoute(
     defaults: new { controller = "Student", action = "Show"}
     );
 
+// this is the simplest default route; what it does is expanded on in the default route below
 //app.MapDefaultControllerRoute();
 
 // default route:
@@ -35,7 +40,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"  // default route; NO SPACES in the pattern URL; ? is an optional segment
     );
+// example: www.mysite.com/home/index
+// request goes to the server for mysite.com and the Index() method/action in HomeController.cs is invoked
 
+// always put the final "catch all" route at the bottom
 app.MapControllerRoute(
     name: "catchAll",
     pattern: "{*whatever}",
