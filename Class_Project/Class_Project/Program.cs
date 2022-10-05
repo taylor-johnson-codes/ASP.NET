@@ -38,7 +38,8 @@ app.MapControllerRoute(
 // default route:
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"  // default route; NO SPACES in the pattern URL; ? is an optional segment
+    //pattern: "{controller=Home}/{action=Index}/{id?}"  // NO SPACES in the pattern URL; ? is an optional segment
+    pattern: "{controller=Instructor}/{action=Index}/{id?}"  
     );
 // example: www.mysite.com/home/index
 // request goes to the server for mysite.com and the Index() method/action in HomeController.cs is invoked
