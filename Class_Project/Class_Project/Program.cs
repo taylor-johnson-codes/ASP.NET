@@ -26,6 +26,7 @@ app.UseStaticFiles();  // to enable the use of static files
 
 app.UseRouting();  // routing maps requests to actions
 
+// with this syntax, if "controller" is spelled wrong, there WILL be a compiler error
 app.MapControllerRoute(
     name: "anotherRoute",
     pattern: "Display/{id}",
@@ -36,6 +37,7 @@ app.MapControllerRoute(
 //app.MapDefaultControllerRoute();
 
 // default route:
+// with this syntax, if "controller" is spelled wrong, there WON'T be a compiler error
 app.MapControllerRoute(
     name: "default",
     //pattern: "{controller=Home}/{action=Index}/{id?}"  // NO SPACES in the pattern URL; ? is an optional segment
