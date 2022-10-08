@@ -7,9 +7,9 @@ namespace Class_Project.Controllers
     {
         List<Instructor> InstructorsList = new List<Instructor>();
 
+        // constructor to hard-code data (eventually data will come from a database)
         public InstructorController()
         {
-            // hard-coded data; will eventually be data coming from a database
             InstructorsList.Add(new Instructor()
             {
                 InstructorId = 10,
@@ -39,7 +39,6 @@ namespace Class_Project.Controllers
         }
 
         // display a list of all the instructors
-
         public IActionResult Index()
         {
             return View(InstructorsList);  // pass the list in this file to the view file
@@ -55,11 +54,11 @@ namespace Class_Project.Controllers
             return View("Index", InstructorsList);  // shows the same URL
         }
 
-        public IActionResult ShowDetails(int id)
+        // display the details of one instructor
+        public IActionResult ShowDetails(int id)  // eventually we will search for the id in the database
         {
-            // eventually we will search for the id in the database
-
-            Instructor? oneInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // ? so null can be a result
+            Instructor? oneInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
+            // ? so null can be a result
 
             //if (oneInstr == null)
             //    return NotFound();

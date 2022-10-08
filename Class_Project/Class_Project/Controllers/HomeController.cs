@@ -16,7 +16,7 @@ namespace Class_Project.Controllers
     public class HomeController : Controller  // my HomeController class inherits from the built-in Controller class
     {
         // public methods are called "actions"
-        // IActionResult lets your return different types of action results
+        // IActionResult lets you return different types of action results
         public IActionResult Index()
         {
             //return View();  // added by default in new controller, don't need now

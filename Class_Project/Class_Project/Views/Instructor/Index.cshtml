@@ -33,9 +33,9 @@
                 <td>@instr.FirstName</td>
                 <td>@instr.LastName</td>
                 <td>@instr.Position</td>
-                @*html help*@
+                @*HTML helper:*@
                 @*<td>@Html.ActionLink("Details", "ShowDetails", new {id=instr.InstructorId})</td>*@
-                @*tag helper*@
+                @*Tag helper:*@
                 <td><a asp-action="ShowDetails" asp-route-id="@instr.InstructorId">Details</a></td>
             </tr>
             }
