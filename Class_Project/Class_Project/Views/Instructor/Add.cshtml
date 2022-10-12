@@ -1,0 +1,32 @@
+﻿@*Specify this view works with Instructor (strongly typed)*@
+@model Instructor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+</head>
+<body>
+    <h1>Add New Instructor</h1>
+    @*send post request to Add action that accepts post request*@
+    <form asp-action="Add" method="post">
+        @*input elements*@
+        <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> <br />
+        <label asp-for="FirstName"></label> <input asp-for="FirstName" /> <br />
+        <label asp-for="LastName"></label> <input asp-for="LastName" /> <br />
+        <label asp-for="IsTenured"></label> <input asp-for="IsTenured" /> <br />
+        @*<label asp-for="Position"></label> <input asp-for="Position" /> <br />*@
+        <label asp-for="Position"></label> <select asp-for="Position" asp-items=" Html.GetEnumSelectList(typeof(Level))"></select> <br />
+        <label asp-for="HireDate"></label> <input asp-for="HireDate" /> <br />
+
+        @*submit data to server (needs to be within form tags)*@
+        <input type="submit" value="Save This Instructor" />
+    </form>
+</body>
+</html>

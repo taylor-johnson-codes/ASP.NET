@@ -1,0 +1,38 @@
+﻿@model Instructor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <h1>Edit Instructor</h1>
+    @if(Model == null){
+        <h2>Instructor not found</h2>
+    }
+    else{
+        <form asp-action="Edit" method="post">
+            @*InstructorID is marked as hidden so the user can't edit it; needed so when form is submitted, id won't get set to default int value of zero*@
+            <label asp-for="InstructorId"></label> <input asp-for="InstructorId" type="hidden"/> <br />
+            <label asp-for="FirstName"></label> <input asp-for="FirstName" /> <br />
+            <label asp-for="LastName"></label> <input asp-for="LastName" /> <br />
+            <label asp-for="IsTenured"></label> <input asp-for="IsTenured" /> <br />
+            @*adding select tag for a drop-down menu*@
+            <label asp-for="Position"></label> <select asp-for="Position" asp-items=" Html.GetEnumSelectList(typeof(Level))"></select> <br />
+            <label asp-for="HireDate"></label> <input asp-for="HireDate" /> <br />
+
+            @*submit data to server (needs to be within form tags)*@
+            <input type="submit" value="Save Changes" />
+
+            @*LOOK AT SLIDE 21*@
+            <input type="button" value="Cancel" onclick="history.back()">
+        </form>
+    }
+</body>
+</html>

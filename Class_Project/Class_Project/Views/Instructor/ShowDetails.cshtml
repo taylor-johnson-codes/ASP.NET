@@ -14,6 +14,11 @@
 <body>
     @if (Model != null)
     {
+        <p><label asp-for="FirstName"></label>@Model.FirstName</p>
+
+
+
+
         <h1>Details of Instructor @Model.LastName</h1>
         <p>First Name: @Model.FirstName</p>
         <p>Last Name: @Model.LastName</p>

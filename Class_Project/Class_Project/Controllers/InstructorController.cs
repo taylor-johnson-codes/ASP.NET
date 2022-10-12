@@ -67,5 +67,50 @@ namespace Class_Project.Controllers
 
             return View(oneInstr);  // return the found instructor via a view
         }
+
+        // responds to get requests
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        //model binding
+        [HttpPost]  // this view will be shown in routing only when it's a post request, not a get request
+        public IActionResult Add(Instructor instr)
+        {
+            InstructorsList.Add(instr);  // add the new instructor to the full list of instructors
+            return View("Index", InstructorsList);  // return the updated list to the Index view
+        }
+
+        // responds to get requests
+        public IActionResult Edit(int id)
+        {
+            // when we have a database, search it for id
+
+            // search the list we have; ? allow for null if not found
+            Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);
+
+            return View(foundInstr);
+        }
+
+        [HttpPost]  // this view will be shown in routing only when it's a post request, not a get request
+        public IActionResult Edit(Instructor instrChanges)
+        {
+            // when we have a database, search it for id
+
+            // update the instructor info to the database/list
+            Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
+
+            // assuming not null - SEEE SLIDE 13
+            // put what's in the form into the database/list
+            foundInstr.LastName = instrChanges.LastName;
+            foundInstr.FirstName = instrChanges.FirstName;
+            foundInstr.IsTenured = instrChanges.IsTenured;
+            foundInstr.Position = instrChanges.Position;
+            foundInstr.HireDate = instrChanges.HireDate;
+
+            //return RedirectToAction("Index");  // no persistence
+            return View("Index", InstructorsList);
+        }
     }
 }
