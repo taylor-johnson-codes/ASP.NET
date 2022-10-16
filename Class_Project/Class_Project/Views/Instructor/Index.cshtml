@@ -1,4 +1,7 @@
-﻿@*needed for passing the list from the controller*@
+﻿@*Resource for tag helpers:*@
+@*https://www.learnrazorpages.com/razor-pages/tag-helpers/*@
+
+@*needed for passing the list from the controller*@
 @model IEnumerable<Instructor>
 @*model needs to be all lower case here; capitalized when used below*@
 
@@ -17,49 +20,46 @@
 </head>
 <body>
     <h1>List of Instructors</h1>
-    <table class="table table-hover table-dark w-50">
-        <thead>
-            <tr>
-                @*First(). for first in list*@
-                <th><label asp-for="First().FirstName"></label></th>
+    @if (Model.Count() <= 0)
+    {
+        <h2>There are no instructors in the list.</h2>
+    }
+    else
+    {
+        <table class="table table-hover table-dark w-50">
+            <thead>
+                <tr>
+                    @*The label tags (tag helpers) go along with the Display Data Annotations in the Instructor.cs model*@
 
+                    @*First() for first in list*@
+                    <th><label asp-for="First().FirstName"></label></th>
+                    <th><label asp-for="First().LastName"></label></th>
+                    <th><label asp-for="First().HireDate"></label></th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @*Model needs to be capitalized here; all lower case at the top of the file*@
+                @foreach(var instr in Model){
+                <tr>
+                    <td>@instr.FirstName</td>
+                    <td>@instr.LastName</td>
+                    <td>@instr.HireDate</td>
 
+                    @*HTML helper example for link:*@
+                    @*<td>@Html.ActionLink("Show Details", "ShowDetails", new {id = instr.InstructorId})</td>*@
 
-                @*<th>First Name</th>*@
-                <th>Last Name</th>
-                <th>Position</th>
-                <th><label asp-for="First().HireDate"></label></th>
-                <th>Show Details</th>
-                <th>Edit Instructor</th>
-            </tr>
-        </thead>
-        <tbody>
-            @*Model needs to be capitalized here; all lower case at the top of the file*@
-            @foreach(var instr in Model){
-            <tr>
-                <td>@instr.FirstName</td>
-                <td>@instr.LastName</td>
-                <td>@instr.Position</td>
-                @*doesn't have asp-for so doesn't just show date, also shows time*@
-                <td>@instr.HireDate</td>
-                @*HTML helper:*@
-                @*<td>@Html.ActionLink("Details", "ShowDetails", new {id=instr.InstructorId})</td>*@
-                @*Tag helper:*@
-                <td><a asp-action="ShowDetails" asp-route-id="@instr.InstructorId">Details</a></td>
-                <td><a asp-action="Edit" asp-route-id="@instr.InstructorId">Edit</a></td>
-            </tr>
-            }
-        </tbody>
-        @*<tfoot>
-            <tr>
-                <td>Foot example</td>
-                <td>Foot example</td>
-                <td>Foot example</td>
-            </tr>
-        </tfoot>*@
-    </table>
+                    @*Tag helper example for link:*@
+                    <td><a asp-action="ShowDetails" asp-route-id="@instr.InstructorId">Show Details</a></td>
+                    <td><a asp-action="Edit" asp-route-id="@instr.InstructorId">Edit Instructor</a></td>
+                </tr>
+                }
+            </tbody>
+        </table>
 
-    @*clicking on link will call the Add() action in the controller*@
-    <a asp-action="Add">Add New Instructor</a>
+        @*clicking the link will call the Add() action in the controller*@
+        <a asp-action="Add">Add Instructor</a>
+    }
 </body>
 </html>

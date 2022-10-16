@@ -14,19 +14,16 @@
 <body>
     @if (Model != null)
     {
-        <p><label asp-for="FirstName"></label>@Model.FirstName</p>
-
-
-
-
         <h1>Details of Instructor @Model.LastName</h1>
-        <p>First Name: @Model.FirstName</p>
-        <p>Last Name: @Model.LastName</p>
-        <p>ID: @Model.InstructorId</p>
-        <p>Is Tenured? @Model.IsTenured</p>
-        <p>Position: @Model.Position</p>
+        <p><label asp-for="InstructorId"></label>: @Model.InstructorId</p>
+        <p><label asp-for="FirstName"></label>: @Model.FirstName</p>
+        <p><label asp-for="LastName"></label>: @Model.LastName</p>
+        <p><label asp-for="IsTenured"></label>: @Model.IsTenured</p>
+        <p><label asp-for="Position"></label>: @Model.Position</p>
+        <p><label asp-for="HireDate"></label>: @Model.HireDate</p>
     }
-    else{
+    else
+    {
         <h1>Instructor not found</h1>
     }
 

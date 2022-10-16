@@ -1,5 +1,6 @@
 ﻿using Class_Project.Models;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.WebRequestMethods;
 
 namespace Class_Project.Controllers
 {
@@ -16,8 +17,10 @@ namespace Class_Project.Controllers
                 FirstName = "Alex",
                 LastName = "Mezei",
                 IsTenured = false,
-                Position = Level.AssistantProfessor
-            });
+                Position = Level.AssistantProfessor,
+                //HireDate = DateOnly.Parse("10/10/2010"),
+                HireDate = new DateOnly(2010, 10, 10)
+            });;
 
             InstructorsList.Add(new Instructor()
             {
@@ -26,6 +29,8 @@ namespace Class_Project.Controllers
                 LastName = "Chen",
                 IsTenured = true,
                 Position = Level.AssociateProfessor,
+                //HireDate = DateOnly.Parse("2/20/2020")
+                HireDate = new DateOnly(2020, 2, 20)
             });
 
             InstructorsList.Add(new Instructor()
@@ -35,6 +40,8 @@ namespace Class_Project.Controllers
                 LastName = "Beer",
                 IsTenured = true,
                 Position = Level.FullProfessor,
+                //HireDate = DateOnly.Parse("3/30/2003")
+                HireDate = new DateOnly(2003, 3, 30)
             });
         }
 
@@ -68,49 +75,57 @@ namespace Class_Project.Controllers
             return View(oneInstr);  // return the found instructor via a view
         }
 
-        // responds to get requests
+        [HttpGet]  // responds to GET requests
         public IActionResult Add()
         {
             return View();
         }
 
-        //model binding
-        [HttpPost]  // this view will be shown in routing only when it's a post request, not a get request
+        // Model binding: Controllers and Razor pages work with data that comes from HTTP requests
+        // 1st: Data is retrieved from various sources (e.g. a form field in a view)
+        // 2nd: Data is provided to controller
+        // 3rd: Data is converted to .NET types when needed
+
+        [HttpPost]  // this view will be shown only in response to a POST request, not a get request
         public IActionResult Add(Instructor instr)
         {
             InstructorsList.Add(instr);  // add the new instructor to the full list of instructors
             return View("Index", InstructorsList);  // return the updated list to the Index view
         }
 
-        // responds to get requests
+        [HttpGet]  // responds to GET requests
         public IActionResult Edit(int id)
         {
-            // when we have a database, search it for id
+            // when we have a database, search it for an instance with a matching id
 
-            // search the list we have; ? allow for null if not found
-            Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);
+            // search the list we have; "?" allows for null if not found
+            Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
             return View(foundInstr);
         }
 
-        [HttpPost]  // this view will be shown in routing only when it's a post request, not a get request
+        [HttpPost]  // this view will be shown only in response to a POST request, not a get request
         public IActionResult Edit(Instructor instrChanges)
         {
-            // when we have a database, search it for id
-
             // update the instructor info to the database/list
             Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
 
-            // assuming not null - SEEE SLIDE 13
-            // put what's in the form into the database/list
-            foundInstr.LastName = instrChanges.LastName;
-            foundInstr.FirstName = instrChanges.FirstName;
-            foundInstr.IsTenured = instrChanges.IsTenured;
-            foundInstr.Position = instrChanges.Position;
-            foundInstr.HireDate = instrChanges.HireDate;
+            if (foundInstr != null)
+            {
+                // put what's in the form into the database/list
+                foundInstr.LastName = instrChanges.LastName;
+                foundInstr.FirstName = instrChanges.FirstName;
+                foundInstr.IsTenured = instrChanges.IsTenured;
+                foundInstr.Position = instrChanges.Position;
+                foundInstr.HireDate = instrChanges.HireDate;
+            }
+            else
+            {
+                // Fix the views to address this concern
+            }
 
-            //return RedirectToAction("Index");  // no persistence
-            return View("Index", InstructorsList);
+            //return RedirectToAction("Index");  // no persistence because we're not setup with database yet
+            return View("Index", InstructorsList);  // temporary fix
         }
     }
 }

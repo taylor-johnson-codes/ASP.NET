@@ -10,23 +10,31 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Add</title>
+    <title>Add Instructor</title>
 </head>
 <body>
-    <h1>Add New Instructor</h1>
-    @*send post request to Add action that accepts post request*@
+    <h1>Add Instructor</h1>
+    @*Send a post request to the Add action that accepts post requests*@
     <form asp-action="Add" method="post">
-        @*input elements*@
+        @*Input elements capture the users input*@
         <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> <br />
         <label asp-for="FirstName"></label> <input asp-for="FirstName" /> <br />
         <label asp-for="LastName"></label> <input asp-for="LastName" /> <br />
         <label asp-for="IsTenured"></label> <input asp-for="IsTenured" /> <br />
+
+        @*Input tag does NOT have drop down list for enum*@
         @*<label asp-for="Position"></label> <input asp-for="Position" /> <br />*@
-        <label asp-for="Position"></label> <select asp-for="Position" asp-items=" Html.GetEnumSelectList(typeof(Level))"></select> <br />
+
+        @*Select tag DOES have drop down list for enum*@
+        <label asp-for="Position"></label> <select asp-for="Position" asp-items="Html.GetEnumSelectList(typeof(Level))"></select> <br />
+        
         <label asp-for="HireDate"></label> <input asp-for="HireDate" /> <br />
 
-        @*submit data to server (needs to be within form tags)*@
+        @*Submit data to server (button needs to be inside form tags to work)*@
         <input type="submit" value="Save This Instructor" />
+
+        @*To cancel and not post anything, just go back in the browser*@
+        <input type="button" value="Cancel" onclick="history.back()">
     </form>
 </body>
 </html>
