@@ -14,13 +14,25 @@
 </head>
 <body>
     <h1>Add Instructor</h1>
+
+    @*displays error messages (if any) all in one place*@
+    <div asp-validation-summary="All"></div>
+
     @*Send a post request to the Add action that accepts post requests*@
     <form asp-action="Add" method="post">
         @*Input elements capture the users input*@
-        <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> <br />
-        <label asp-for="FirstName"></label> <input asp-for="FirstName" /> <br />
-        <label asp-for="LastName"></label> <input asp-for="LastName" /> <br />
-        <label asp-for="IsTenured"></label> <input asp-for="IsTenured" /> <br />
+        <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> 
+        <span asp-validation-for="InstructorId"></span><br />
+        @*these span tags so in-line error messages (if any)*@
+
+        <label asp-for="FirstName"></label> <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span><br />
+
+        <label asp-for="LastName"></label> <input asp-for="LastName" />
+        <span asp-validation-for="LastName"></span><br />
+
+        <label asp-for="IsTenured"></label> <input asp-for="IsTenured" />
+        <span asp-validation-for="IsTenured"></span><br />
 
         @*Input tag does NOT have drop down list for enum*@
         @*<label asp-for="Position"></label> <input asp-for="Position" /> <br />*@
