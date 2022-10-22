@@ -7,13 +7,11 @@ namespace Class_Project.Controllers
 {
     public class InstructorController : Controller
     {
-        // moved hard-coded data from the ctor here to the ctor in the FakeData service
+        // moved hard-coded data from the constructor here to the constructor in the FakeData service
 
         // inject FakeData service
         IFakeData _fakedata;  // local instance
-
-        // need constructor to create an instance
-        public InstructorController(IFakeData theFakeDataService)
+        public InstructorController(IFakeData theFakeDataService)  // need constructor to create the instance
         {
             _fakedata = theFakeDataService;
         }

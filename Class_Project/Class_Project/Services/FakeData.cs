@@ -1,4 +1,7 @@
-﻿using Class_Project.Models;
+﻿// Creating an instance via a service that can be used/persists for the duration of the application
+// When the application restarts, the data is lost
+
+using Class_Project.Models;
 
 namespace Class_Project.Services
 {

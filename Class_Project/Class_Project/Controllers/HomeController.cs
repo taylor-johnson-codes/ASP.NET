@@ -13,6 +13,7 @@ namespace Class_Project.Controllers
     // - The class inherits from a class whose name is suffixed with "Controller"
     // - The [Controller] attribute is applied to the class
 
+    // Each time a request is received, a new Controller object is created
     public class HomeController : Controller  // my HomeController class inherits from the built-in Controller class
     {
         // public methods are called "actions"
