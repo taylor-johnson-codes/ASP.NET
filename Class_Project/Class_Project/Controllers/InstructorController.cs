@@ -133,16 +133,6 @@ namespace Class_Project.Controllers
 
             // return user to Index view
             return RedirectToAction("Index");
-
-
-            //if (foundInstr != null)
-            //{
-            //    _fakedata.InstructorsList.Remove(foundInstr);  // delete it
-            //    //return View("Index");
-            //    return RedirectToAction("Index");
-            //}
-            //else
-            //    return NotFound();
         }
     }
 }
