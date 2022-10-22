@@ -2,10 +2,8 @@
 
 namespace Class_Project.Services
 {
-    public interface IMyData
+    public interface IFakeData
     {
         public List<Instructor> InstructorsList { get; set; }
-
-        // 10/11/22 video ~7:55
     }
 }

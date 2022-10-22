@@ -2,9 +2,12 @@
 // The namespace{}/class{}/Main(){} statements that older versions of .NET showed are still there in the background of the Program.cs file
 // (The compiler generates a class and Main method entry point for the application)
 
+using Class_Project.Services;
+
 var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
 
 builder.Services.AddControllersWithViews();  // for adding MVC into the project
+builder.Services.AddSingleton<IFakeData, FakeData>();  // for adding my hard-coded data as a service
 
 // ------------------------------- MIDDLEWARE PIPELINE (handles HTTP requests and responses) -------------------------------
 

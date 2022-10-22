@@ -1,4 +1,5 @@
 ﻿using Class_Project.Models;
+using Class_Project.Services;
 using Microsoft.AspNetCore.Mvc;
 using static System.Net.WebRequestMethods;
 
@@ -6,65 +7,37 @@ namespace Class_Project.Controllers
 {
     public class InstructorController : Controller
     {
-        List<Instructor> InstructorsList = new List<Instructor>();
+        // moved hard-coded data from the ctor here to the ctor in the FakeData service
 
-        // constructor to hard-code data (eventually data will come from a database)
-        public InstructorController()
+        // inject FakeData service
+        IFakeData _fakedata;  // local instance
+
+        // need constructor to create an instance
+        public InstructorController(IFakeData theFakeDataService)
         {
-            InstructorsList.Add(new Instructor()
-            {
-                InstructorId = 10,
-                FirstName = "Alex",
-                LastName = "Mezei",
-                IsTenured = false,
-                Position = Level.AssistantProfessor,
-                //HireDate = DateOnly.Parse("10/10/2010"),
-                HireDate = new DateOnly(2010, 10, 10)
-            });;
-
-            InstructorsList.Add(new Instructor()
-            {
-                InstructorId = 20,
-                FirstName = "Xuguang",
-                LastName = "Chen",
-                IsTenured = true,
-                Position = Level.AssociateProfessor,
-                //HireDate = DateOnly.Parse("2/20/2020")
-                HireDate = new DateOnly(2020, 2, 20)
-            });
-
-            InstructorsList.Add(new Instructor()
-            {
-                InstructorId = 30,
-                FirstName = "Richard",
-                LastName = "Beer",
-                IsTenured = true,
-                Position = Level.FullProfessor,
-                //HireDate = DateOnly.Parse("3/30/2003")
-                HireDate = new DateOnly(2003, 3, 30)
-            });
+            _fakedata = theFakeDataService;
         }
 
         // display a list of all the instructors
         public IActionResult Index()
         {
-            return View(InstructorsList);  // pass the list in this file to the view file
+            return View(_fakedata.InstructorsList);  // pass the list in this file to the view file
         }
 
         public IActionResult ShowAll()
         {
-            return RedirectToAction("Index", InstructorsList);  // doesn't show the same URL
+            return RedirectToAction("Index", _fakedata.InstructorsList);  // doesn't show the same URL
         }
 
         public IActionResult DisplayAll()
         {
-            return View("Index", InstructorsList);  // shows the same URL
+            return View("Index", _fakedata.InstructorsList);  // shows the same URL
         }
 
         // display the details of one instructor
         public IActionResult ShowDetails(int id)  // eventually we will search for the id in the database
         {
-            Instructor? oneInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
+            Instructor? oneInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
             // ? so null can be a result
 
             //if (oneInstr == null)
@@ -90,8 +63,10 @@ namespace Class_Project.Controllers
         public IActionResult Add(Instructor instr)
         {
             // ADD VALIDATION CODE ~619
-            InstructorsList.Add(instr);  // add the new instructor to the full list of instructors
-            return View("Index", InstructorsList);  // return the updated list to the Index view
+            _fakedata.InstructorsList.Add(instr);  // add the new instructor to the full list of instructors
+
+            return RedirectToAction("Index");
+            //return View("Index", _fakedata.InstructorsList);  // DELETE, THIS WAS B4 SERVICES IMPLEMENTED
         }
 
         [HttpGet]  // responds to GET requests
@@ -100,7 +75,7 @@ namespace Class_Project.Controllers
             // when we have a database, search it for an instance with a matching id
 
             // search the list we have; "?" allows for null if not found
-            Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
+            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
             return View(foundInstr);
         }
@@ -109,7 +84,7 @@ namespace Class_Project.Controllers
         public IActionResult Edit(Instructor instrChanges)
         {
             // update the instructor info to the database/list
-            Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
+            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
 
             // ADD VALIDATION CODE ~619
 
@@ -127,8 +102,8 @@ namespace Class_Project.Controllers
                 // Fix the views to address this concern
             }
 
-            //return RedirectToAction("Index");  // no persistence because we're not setup with database yet
-            return View("Index", InstructorsList);  // temporary fix
+            return RedirectToAction("Index");
+            //return View("Index", _fakedata.InstructorsList);  // DELETE, THIS WAS B4 SERVICES IMPLEMENTED
         }
 
         //// are you sure form
