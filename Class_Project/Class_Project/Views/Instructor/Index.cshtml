@@ -58,15 +58,16 @@
 
                     @*Tag helper example for link:*@
                     <td><a asp-action="ShowDetails" asp-route-id="@instr.InstructorId">Show Details</a></td>
-                        <td><a asp-action="Edit" asp-route-id="@instr.InstructorId">Edit Instructor</a></td>
-                        <td><a asp-action="Delete" asp-route-id="@instr.InstructorId">Delete Instructor</a></td>
+                    <td><a asp-action="Edit" asp-route-id="@instr.InstructorId">Edit Instructor</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@instr.InstructorId">Delete Instructor</a></td>
                 </tr>
                 }
             </tbody>
         </table>
 
         @*clicking the link will call the Add() action in the controller*@
-        <a asp-action="Add">Add Instructor</a>
+        @*<a asp-action="Add">Add Instructor</a>*@
+        <a type="button" class="btn btn-primary" asp-action="Add">Add Instructor</a>
     }
 </body>
 </html>

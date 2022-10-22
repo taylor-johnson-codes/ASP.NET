@@ -10,6 +10,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     @*links for bootstrap nav bar:*@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -17,7 +18,7 @@
 <body>
     @if (Model != null)
     {
-        <h1>Details of Instructor @Model.LastName</h1>
+        <h3>Details of Instructor @Model.LastName</h3>
         <p><label asp-for="InstructorId"></label>: @Model.InstructorId</p>
         <p><label asp-for="FirstName"></label>: @Model.FirstName</p>
         <p><label asp-for="LastName"></label>: @Model.LastName</p>
@@ -25,16 +26,19 @@
         <p><label asp-for="Position"></label>: @Model.Position</p>
         <p><label asp-for="HireDate"></label>: @Html.DisplayFor(model => Model.HireDate)</p>
         @*using only Model.HireDate would also display the time*@
+
+        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.InstructorId">Delete Instructor</a> <br />
     }
     else
     {
         <h1>Instructor not found</h1>
     }
+    <br />
 
     @*html helper*@
     @*@Html.ActionLink("Back to Index page", "Index")*@
 
     @*tag helper*@
-    <a asp-action="Index">Back to Index page</a>
+    <a type="button" class="btn btn-primary" asp-action="Index">Back to Index page</a>
 </body>
 </html>

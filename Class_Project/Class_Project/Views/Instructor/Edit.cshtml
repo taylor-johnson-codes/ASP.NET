@@ -20,8 +20,10 @@
     else
     {
         <form asp-action="Edit" method="post">
-            @*InstructorID is marked as hidden so the user can't edit it; needed so when form is submitted, id won't get set to default int value of zero*@
-            <label asp-for="InstructorId"></label> <input asp-for="InstructorId" type="hidden"/> <br />
+            @*needed for model-binding so id passes to Delete action (don't want user to be able to edit the id value)*@
+            @*without this, id would get reset to default value of zero*@
+            <input asp-for="InstructorId" type="hidden"/> <br />
+
             <label asp-for="FirstName"></label> <input asp-for="FirstName" /> <br />
             <label asp-for="LastName"></label> <input asp-for="LastName" /> <br />
             <label asp-for="IsTenured"></label> <input asp-for="IsTenured" /> <br />

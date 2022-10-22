@@ -29,25 +29,22 @@ app.UseStaticFiles();  // to enable the use of static files
 
 app.UseRouting();  // routing maps requests to actions
 
-// with this syntax, if "controller" is spelled wrong, there WILL be a compiler error
-app.MapControllerRoute(
-    name: "anotherRoute",
-    pattern: "Display/{id}",
-    defaults: new { controller = "Student", action = "Show"}
-    );
-
-// this is the simplest default route; what it does is expanded on in the default route below
-//app.MapDefaultControllerRoute();
-
 // default route:
 // with this syntax, if "controller" is spelled wrong, there WON'T be a compiler error
 app.MapControllerRoute(
-    name: "default",
-    //pattern: "{controller=Home}/{action=Index}/{id?}"  // NO SPACES in the pattern URL; ? is an optional segment
-    pattern: "{controller=Instructor}/{action=Index}/{id?}"  
+    name: "default",  // we're not using the name anywhere, it's just part of the syntax
+    //pattern: "{controller=Home}/{action=Index}/{id?}"  // NO SPACES in the pattern URL; ? is an optional segment of the URL
+    pattern: "{controller=Instructor}/{action=Index}/{id?}"
+    // with this pattern, Instructor controller and Index action are invoked by default if no other controller/action is specified in the URL
     );
-// example: www.mysite.com/home/index
-// request goes to the server for mysite.com and the Index() method/action in HomeController.cs is invoked
+
+// alternative default route:
+// with this syntax, if "controller" is spelled wrong, there WILL be a compiler error
+//app.MapControllerRoute(
+//    name: "anotherRoute",
+//    pattern: "Display/{id}",
+//    defaults: new { controller = "Student", action = "Show" }
+//    );
 
 // always put the final "catch all" route at the bottom
 app.MapControllerRoute(

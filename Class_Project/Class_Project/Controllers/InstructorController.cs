@@ -104,38 +104,45 @@ namespace Class_Project.Controllers
             //return View("Index", _fakedata.InstructorsList);  // DELETE, THIS WAS B4 SERVICES IMPLEMENTED
         }
 
-        //// are you sure form
-        //[HttpGet]
-        //public IActionResult Delete(int id)
-        //{
-        //    // when we have a database, search it for an instance with a matching id
+        // confirm the user wants to delete the instructor
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            // when we have a database, search it for an instance with a matching id
 
-        //    // search the list we have; "?" allows for null if not found
-        //    Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
+            // search the list we have; "?" allows for null if not found
+            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
-        //    if(foundInstr != null)
-        //        return View(foundInstr);
-        //    else
-        //        return NotFound();
-        //}
+            if (foundInstr != null)
+                return View(foundInstr);
+            else
+                return NotFound();  // built-in action (displays HTTP Error 404)
+        }
 
-        //// delete confirmed
-        //[HttpPost, ActionName("Delete")]
-        //public IActionResult Delete(int id)
-        //{
-        //    // when we have a database, search it for an instance with a matching id
+        // perform delete request
+        [HttpPost, ActionName("Delete")]  // this line plus changing the action name fixes the problem of having two matching action names with matching parameters
+        public IActionResult PerformDelete(int id)
+        {
+            // when we have a database, search it for an instance with a matching id
 
-        //    // search the list we have; "?" allows for null if not found
-        //    Instructor? foundInstr = InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
+            // search the list we have; "?" allows for null if not found
+            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
-        //    // NEED TO WATCH ~555 he went too fast
-        //    if (foundInstr != null)
-        //    {
-        //        InstructorsList.Remove(foundInstr);
-        //        return View("Index");
-        //    }
-        //    else
-        //        return NotFound();
-        //}
+            // delete it
+            _fakedata.InstructorsList.Remove(foundInstr);  
+
+            // return user to Index view
+            return RedirectToAction("Index");
+
+
+            //if (foundInstr != null)
+            //{
+            //    _fakedata.InstructorsList.Remove(foundInstr);  // delete it
+            //    //return View("Index");
+            //    return RedirectToAction("Index");
+            //}
+            //else
+            //    return NotFound();
+        }
     }
 }
