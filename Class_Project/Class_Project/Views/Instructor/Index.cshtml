@@ -46,7 +46,12 @@
                 <tr>
                     <td>@instr.FirstName</td>
                     <td>@instr.LastName</td>
-                    <td>@instr.HireDate</td>
+
+                    @*displays date WITH time*@
+                    @*<td>@instr.HireDate</td>*@
+
+                    @*displays date WITHOUT time*@
+                    <td>@Html.DisplayFor(model => instr.HireDate)</td>
 
                     @*HTML helper example for link:*@
                     @*<td>@Html.ActionLink("Show Details", "ShowDetails", new {id = instr.InstructorId})</td>*@

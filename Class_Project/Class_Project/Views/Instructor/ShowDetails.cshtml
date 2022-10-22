@@ -23,7 +23,8 @@
         <p><label asp-for="LastName"></label>: @Model.LastName</p>
         <p><label asp-for="IsTenured"></label>: @Model.IsTenured</p>
         <p><label asp-for="Position"></label>: @Model.Position</p>
-        <p><label asp-for="HireDate"></label>: @Model.HireDate</p>
+        <p><label asp-for="HireDate"></label>: @Html.DisplayFor(model => Model.HireDate)</p>
+        @*using only Model.HireDate would also display the time*@
     }
     else
     {

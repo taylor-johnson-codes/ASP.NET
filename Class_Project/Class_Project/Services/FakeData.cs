@@ -21,7 +21,7 @@ namespace Class_Project.Services
                 IsTenured = false,
                 Position = Level.AssistantProfessor,
                 //HireDate = DateOnly.Parse("10/10/2010"),
-                HireDate = new DateOnly(2010, 10, 10)
+                HireDate = new DateTime(2010, 10, 10)
             }); ;
 
             InstructorsList.Add(new Instructor()
@@ -32,7 +32,7 @@ namespace Class_Project.Services
                 IsTenured = true,
                 Position = Level.AssociateProfessor,
                 //HireDate = DateOnly.Parse("2/20/2020")
-                HireDate = new DateOnly(2020, 2, 20)
+                HireDate = new DateTime(2020, 2, 20)
             });
 
             InstructorsList.Add(new Instructor()
@@ -43,7 +43,7 @@ namespace Class_Project.Services
                 IsTenured = true,
                 Position = Level.FullProfessor,
                 //HireDate = DateOnly.Parse("3/30/2003")
-                HireDate = new DateOnly(2003, 3, 30)
+                HireDate = new DateTime(2003, 3, 30)
             });
         }
     }

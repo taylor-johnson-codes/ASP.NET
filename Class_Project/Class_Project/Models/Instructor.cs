@@ -40,10 +40,9 @@ namespace Class_Project.Models
         public Level Position { get; set; }
 
         [Required(ErrorMessage = "Enter hire date")]
-        //[Range(typeof(DateTime), "01/01/2020", "12/31/2022")]
+        [Range(typeof(DateTime), "01/01/2020", "12/31/2022")]
         [Display(Name = "Hire Date")]
         [DataType(DataType.Date)]
-        public DateOnly HireDate { get; set; }
-        // CHANGE BACK TO DATETIME THROUGHOUT
+        public DateTime HireDate { get; set; }
     }
 }
