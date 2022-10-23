@@ -10,45 +10,52 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     <title>Add Instructor</title>
 </head>
 <body>
     <h1>Add Instructor</h1>
 
     @*displays error messages (if any) all in one place*@
-    <div asp-validation-summary="All"></div>
+    <div class="text-danger fw-bold" asp-validation-summary="All"></div>
 
     @*Send a post request to the Add action that accepts post requests*@
     <form asp-action="Add" method="post">
         @*Input elements capture the users input*@
         <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> 
-        <span asp-validation-for="InstructorId"></span><br />
+        <span class="text-danger fw-bold" asp-validation-for="InstructorId"></span><br />
         @*the span tags display in-line validation error messages (if any)*@
 
         <label asp-for="FirstName"></label> <input asp-for="FirstName" />
-        <span asp-validation-for="FirstName"></span><br />
+        <span class="text-danger fw-bold" asp-validation-for="FirstName"></span><br />
 
         <label asp-for="LastName"></label> <input asp-for="LastName" />
-        <span asp-validation-for="LastName"></span><br />
+        <span class="text-danger fw-bold" asp-validation-for="LastName"></span><br />
 
         <label asp-for="IsTenured"></label> <input asp-for="IsTenured" />
-        <span asp-validation-for="IsTenured"></span><br />
+        <span class="text-danger fw-bold" asp-validation-for="IsTenured"></span><br />
 
         @*Input tag does NOT have drop down list for enum*@
         @*<label asp-for="Position"></label> <input asp-for="Position" /> <br />*@
 
         @*Select tag DOES have drop down list for enum*@
         <label asp-for="Position"></label> <select asp-for="Position" asp-items="Html.GetEnumSelectList(typeof(Level))"></select>
-        <span asp-validation-for="Position"></span><br />
+        <span class="text-danger fw-bold" asp-validation-for="Position"></span><br />
         
         <label asp-for="HireDate"></label> <input asp-for="HireDate" />
-        <span asp-validation-for="HireDate"></span><br />
+        <span class="text-danger fw-bold" asp-validation-for="HireDate"></span><br />
 
         @*Submit data to server (button needs to be inside form tags to work)*@
-        <input type="submit" value="Save This Instructor" />
+        <input class="btn btn-success" type="submit" value="Save This Instructor" />
 
-        @*To cancel and not post anything, just go back in the browser*@
-        <input type="button" value="Cancel" onclick="history.back()">
     </form>
+    
+    @*To cancel and not post anything, just go back in the browser*@
+    @*DOESN'T WORK AFTER THERE ARE VALIDATION ERRORS*@
+    @*<input type="button" value="Cancel" onclick="history.back()">*@
+
+    <br>
+    <a type="button" class="btn btn-primary" asp-action="Index">Back to Index</a>
 </body>
 </html>
