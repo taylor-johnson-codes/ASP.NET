@@ -38,12 +38,7 @@ namespace Class_Project.Controllers
             Instructor? oneInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
             // ? so null can be a result
 
-            //if (oneInstr == null)
-            //    return NotFound();
-            //else
-            //    return Content("found");
-
-            return View(oneInstr);  // return the found instructor via a view
+            return View(oneInstr);  // return the result via a view
         }
 
         [HttpGet]  // responds to GET requests
