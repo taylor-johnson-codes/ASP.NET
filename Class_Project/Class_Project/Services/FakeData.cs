@@ -18,7 +18,7 @@ namespace Class_Project.Services
 
             InstructorsList.Add(new Instructor()
             {
-                InstructorId = 10,
+                InstructorId = 1,
                 FirstName = "Alex",
                 LastName = "Mezei",
                 IsTenured = false,
@@ -29,7 +29,7 @@ namespace Class_Project.Services
 
             InstructorsList.Add(new Instructor()
             {
-                InstructorId = 20,
+                InstructorId = 2,
                 FirstName = "Xuguang",
                 LastName = "Chen",
                 IsTenured = true,
@@ -40,7 +40,7 @@ namespace Class_Project.Services
 
             InstructorsList.Add(new Instructor()
             {
-                InstructorId = 30,
+                InstructorId = 3,
                 FirstName = "Richard",
                 LastName = "Beer",
                 IsTenured = true,

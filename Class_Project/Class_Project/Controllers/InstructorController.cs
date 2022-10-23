@@ -55,11 +55,13 @@ namespace Class_Project.Controllers
         [HttpPost]  // this view will be shown only in response to a POST request, not a get request
         public IActionResult Add(Instructor instr)
         {
-            // ADD VALIDATION CODE ~619
+            // if ModelState is NOT valid, don't add, and return to Add view
+            if (!ModelState.IsValid)
+                return View();
+            
+            // if ModelState IS valid, add, and return to Index view
             _fakedata.InstructorsList.Add(instr);  // add the new instructor to the full list of instructors
-
             return RedirectToAction("Index");
-            //return View("Index", _fakedata.InstructorsList);  // DELETE, THIS WAS B4 SERVICES IMPLEMENTED
         }
 
         [HttpGet]  // responds to GET requests
@@ -76,10 +78,12 @@ namespace Class_Project.Controllers
         [HttpPost]  // this view will be shown only in response to a POST request, not a get request
         public IActionResult Edit(Instructor instrChanges)
         {
-            // update the instructor info to the database/list
-            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
+            // if ModelState is NOT valid, don't edit, and return to Edit view to display errors
+            if (!ModelState.IsValid)
+                return View(instrChanges);
 
-            // ADD VALIDATION CODE ~619
+            // if ModelState IS valid, save the edits, and return to Index view
+            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
 
             if (foundInstr != null)
             {
@@ -90,13 +94,12 @@ namespace Class_Project.Controllers
                 foundInstr.Position = instrChanges.Position;
                 foundInstr.HireDate = instrChanges.HireDate;
             }
-            else
-            {
-                // Fix the views to address this concern
-            }
+            //else
+            //{
+            //    return Content("Instructor not found");
+            //}
 
             return RedirectToAction("Index");
-            //return View("Index", _fakedata.InstructorsList);  // DELETE, THIS WAS B4 SERVICES IMPLEMENTED
         }
 
         // confirm the user wants to delete the instructor

@@ -23,7 +23,7 @@
         @*Input elements capture the users input*@
         <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> 
         <span asp-validation-for="InstructorId"></span><br />
-        @*these span tags so in-line error messages (if any)*@
+        @*the span tags display in-line validation error messages (if any)*@
 
         <label asp-for="FirstName"></label> <input asp-for="FirstName" />
         <span asp-validation-for="FirstName"></span><br />
@@ -38,9 +38,11 @@
         @*<label asp-for="Position"></label> <input asp-for="Position" /> <br />*@
 
         @*Select tag DOES have drop down list for enum*@
-        <label asp-for="Position"></label> <select asp-for="Position" asp-items="Html.GetEnumSelectList(typeof(Level))"></select> <br />
+        <label asp-for="Position"></label> <select asp-for="Position" asp-items="Html.GetEnumSelectList(typeof(Level))"></select>
+        <span asp-validation-for="Position"></span><br />
         
-        <label asp-for="HireDate"></label> <input asp-for="HireDate" /> <br />
+        <label asp-for="HireDate"></label> <input asp-for="HireDate" />
+        <span asp-validation-for="HireDate"></span><br />
 
         @*Submit data to server (button needs to be inside form tags to work)*@
         <input type="submit" value="Save This Instructor" />

@@ -21,12 +21,12 @@ namespace Class_Project.Models
         public int InstructorId { get; set; }
 
         [Required(ErrorMessage = "Enter first name")]
-        [StringLength(100, ErrorMessage = "Can't use more than 100 characters")]
+        [StringLength(20, ErrorMessage = "Can't use more than 20 characters")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Enter last name")]
-        [StringLength(100, ErrorMessage = "Can't use more than 100 characters")]
+        [StringLength(20, ErrorMessage = "Can't use more than 20 characters")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
