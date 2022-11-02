@@ -2,16 +2,27 @@
 // The namespace{}/class{}/Main(){} statements that older versions of .NET showed are still there in the background of the Program.cs file
 // (The compiler generates a class and Main method entry point for the application)
 
+using Class_Project.Data;
+using Class_Project.Models;
 using Class_Project.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
 
 builder.Services.AddControllersWithViews();  // for adding MVC into the project
 builder.Services.AddSingleton<IFakeData, FakeData>();  // for adding my hard-coded data as a service
+//builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite("someDB.db"));  // for Entity Framework - will have to  re-compile to change DB
+builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("MyConnectionString")));  // for Entity Framework to change DB w/o re-compiling code
+// will get data via json file
 
 // ------------------------------- MIDDLEWARE PIPELINE (handles HTTP requests and responses) -------------------------------
 
 var app = builder.Build();  // sets up middleware components
+
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyDataDbContext>();  // give access to context/DB for Entity Framework
+//context.Database.EnsureDeleted();  // if DB exists,  delete it and start with no existing DB
+context.Database.EnsureCreated();  // if DB doesn't exist, then create it (otherwise do nothing)
+SeedData.SeedDatabase(context);  // only call this for testing purposes
 
 //app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
                          // not needed after upgrading project to MVC

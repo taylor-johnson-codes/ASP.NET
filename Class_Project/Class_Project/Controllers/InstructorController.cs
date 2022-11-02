@@ -1,4 +1,5 @@
-﻿using Class_Project.Models;
+﻿using Class_Project.Data;
+using Class_Project.Models;
 using Class_Project.Services;
 using Microsoft.AspNetCore.Mvc;
 using static System.Net.WebRequestMethods;
@@ -10,38 +11,48 @@ namespace Class_Project.Controllers
         // moved hard-coded data from the constructor here to the constructor in the FakeData service
 
         // inject FakeData service
-        IFakeData _fakedata;  // local instance
-        public InstructorController(IFakeData theFakeDataService)  // need constructor to create the instance
+        //IFakeData _fakedata;  // local instance
+        //public InstructorController(IFakeData theFakeDataService)  // need constructor to create the instance
+        //{
+        //    _fakedata = theFakeDataService;
+        //}
+
+        // inject EF DB we created
+        // inject the DbContext class in here
+        private MyDataDbContext _dbContext;
+        public InstructorController(MyDataDbContext dbContext)
         {
-            _fakedata = theFakeDataService;
+            _dbContext = dbContext;
         }
+
+        // change _fakedata.InstructorsList to _dbContext.Instructors.ToList()
 
         // display a list of all the instructors
         public IActionResult Index()
         {
-            return View(_fakedata.InstructorsList);  // pass the list in this file to the view file
+            return View(_dbContext.Instructors.ToList());  // pass the list in this file to the view file
         }
 
         public IActionResult ShowAll()
         {
-            return RedirectToAction("Index", _fakedata.InstructorsList);  // doesn't show the same URL
+            return RedirectToAction("Index", _dbContext.Instructors.ToList());  // doesn't show the same URL
         }
 
         public IActionResult DisplayAll()
         {
-            return View("Index", _fakedata.InstructorsList);  // shows the same URL
+            return View("Index", _dbContext.Instructors.ToList());  // shows the same URL
         }
 
         // display the details of one instructor
         public IActionResult ShowDetails(int id)  // eventually we will search for the id in the database
         {
-            Instructor? oneInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
+            Instructor? oneInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
             // ? so null can be a result
 
             return View(oneInstr);  // return the result via a view
         }
 
-        [HttpGet]  // responds to GET requests
+        [HttpGet]  // responds to GET requests to display form
         public IActionResult Add()
         {
             return View();
@@ -58,19 +69,20 @@ namespace Class_Project.Controllers
             // if ModelState is NOT valid, don't add, and return to Add view
             if (!ModelState.IsValid)
                 return View();
-            
+
             // if ModelState IS valid, add, and return to Index view
-            _fakedata.InstructorsList.Add(instr);  // add the new instructor to the full list of instructors
+            _dbContext.Instructors.Add(instr);  // add the new instructor to the full list of instructors
+            _dbContext.SaveChanges();  // must be called to save change to database
             return RedirectToAction("Index");
         }
 
-        [HttpGet]  // responds to GET requests
+        [HttpGet]  // responds to GET requests to display a pre-populated form
         public IActionResult Edit(int id)
         {
             // when we have a database, search it for an instance with a matching id
 
             // search the list we have; "?" allows for null if not found
-            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
+            Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
             return View(foundInstr);
         }
@@ -83,7 +95,7 @@ namespace Class_Project.Controllers
                 return View(instrChanges);
 
             // if ModelState IS valid, save the edits, and return to Index view
-            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
+            Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == instrChanges.InstructorId);
 
             if (foundInstr != null)
             {
@@ -99,6 +111,8 @@ namespace Class_Project.Controllers
             //    return Content("Instructor not found");
             //}
 
+            _dbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -109,7 +123,7 @@ namespace Class_Project.Controllers
             // when we have a database, search it for an instance with a matching id
 
             // search the list we have; "?" allows for null if not found
-            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
+            Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
             if (foundInstr != null)
                 return View(foundInstr);
@@ -124,10 +138,11 @@ namespace Class_Project.Controllers
             // when we have a database, search it for an instance with a matching id
 
             // search the list we have; "?" allows for null if not found
-            Instructor? foundInstr = _fakedata.InstructorsList.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
+            Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
             // delete it
-            _fakedata.InstructorsList.Remove(foundInstr);  
+            _dbContext.Instructors.Remove(foundInstr);
+            _dbContext.SaveChanges();
 
             // return user to Index view
             return RedirectToAction("Index");

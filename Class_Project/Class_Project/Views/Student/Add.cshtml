@@ -1,0 +1,25 @@
+﻿@model Student
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Student</title>
+</head>
+<body>
+    <h1>Add Student</h1>
+    <form method="post">
+        <label>First name: </label> <input asp-for="FirstName" /> <br />
+        <label>Last name: </label> <input asp-for="LastName" /> <br />
+        <label>GPA: </label> <input asp-for="GPA" /> <br />
+        <label>Is Veteran? </label> <input asp-for="IsVeteran" /> <br />
+        <label asp-for="Major"></label> <select asp-for="Major" asp-items="Html.GetEnumSelectList(typeof(Major))"></select> <br />
+        <input type="submit" value="Add" />
+    </form>
+</body>
+</html>

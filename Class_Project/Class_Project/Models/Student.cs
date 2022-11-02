@@ -12,6 +12,7 @@ namespace Class_Project.Models
     // Controller for this class will use the class name and append "Controller": StudentContoller
     public class Student
     {
+        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsVeteran { get; set; }
