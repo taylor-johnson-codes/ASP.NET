@@ -1,4 +1,7 @@
-﻿using Class_Project.Models;
+﻿// NOT NEEDED AFTER ADDING ENTITY FRAMEWORK CORE (DATABASE) TO PROJECT
+
+/*
+using Class_Project.Models;
 
 namespace Class_Project.Services
 {
@@ -9,3 +12,4 @@ namespace Class_Project.Services
         public List<Instructor> InstructorsList { get; set; }
     }
 }
+*/
