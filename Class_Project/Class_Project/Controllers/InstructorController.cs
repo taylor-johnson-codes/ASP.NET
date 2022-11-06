@@ -1,6 +1,6 @@
 ﻿using Class_Project.Data;
 using Class_Project.Models;
-using Class_Project.Services;
+//using Class_Project.Services;  // moved data from FakeData service to SeedData database
 using Microsoft.AspNetCore.Mvc;
 using static System.Net.WebRequestMethods;
 

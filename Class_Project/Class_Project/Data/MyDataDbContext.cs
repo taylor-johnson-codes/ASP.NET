@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Class_Project.Data
 {
     // my class needs to inherit the built-in DbContext class
+    // this class is used in the "context" variable in Program.cs
     public class MyDataDbContext : DbContext
     {
         // create constructor that accepts parameters (done once per project for set up)

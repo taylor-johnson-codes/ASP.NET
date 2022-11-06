@@ -2,30 +2,30 @@
 // The namespace{}/class{}/Main(){} statements that older versions of .NET showed are still there in the background of the Program.cs file
 // (The compiler generates a class and Main method entry point for the application)
 
+// ------------------------------- MIDDLEWARE PIPELINE (handles HTTP requests and responses) -------------------------------
+
 using Class_Project.Data;
 using Class_Project.Models;
-using Class_Project.Services;
 using Microsoft.EntityFrameworkCore;
+//using Class_Project.Services;  // moved data from FakeData service to SeedData database
 
 var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
 
 builder.Services.AddControllersWithViews();  // for adding MVC into the project
-builder.Services.AddSingleton<IFakeData, FakeData>();  // for adding my hard-coded data as a service
+//builder.Services.AddSingleton<IFakeData, FakeData>();  // for adding my hard-coded data as a service (later moved data from FakeData service to SeedData database)
 //builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite("someDB.db"));  // for Entity Framework - will have to  re-compile to change DB
-builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("MyConnectionString")));  // for Entity Framework to change DB w/o re-compiling code
-// will get data via json file
-
-// ------------------------------- MIDDLEWARE PIPELINE (handles HTTP requests and responses) -------------------------------
+builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("MyConnectionString")));  // for EF Core to change database without re-compiling code
+    // the connection string comes from appsettings.json
 
 var app = builder.Build();  // sets up middleware components
 
-var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyDataDbContext>();  // give access to context/DB for Entity Framework
-//context.Database.EnsureDeleted();  // if DB exists,  delete it and start with no existing DB
-context.Database.EnsureCreated();  // if DB doesn't exist, then create it (otherwise do nothing)
-SeedData.SeedDatabase(context);  // only call this for testing purposes
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyDataDbContext>();  // give access to context/database for Entity Framework
+//context.Database.EnsureDeleted();  // if database exists, delete it and start with no existing DB
+context.Database.EnsureCreated();  // if database doesn't exist, then create it (otherwise do nothing)
+SeedData.SeedDatabase(context);  // only call this for testing purposes; normally the client would load the database with their data
 
 //app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
-                         // not needed after upgrading project to MVC
+// not needed after upgrading project to MVC
 
 app.UseStaticFiles();  // to enable the use of static files
                        // static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
