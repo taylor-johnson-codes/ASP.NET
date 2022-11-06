@@ -23,8 +23,10 @@
     @*Send a post request to the Add action that accepts post requests*@
     <form asp-action="Add" method="post">
         @*Input elements capture the users input*@
-        <label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> 
-        <span class="text-danger fw-bold" asp-validation-for="InstructorId"></span><br />
+
+        @*ID not needed after implementing SQLite database; it will add ID automatically*@
+        @*<label asp-for="InstructorId"></label> <input asp-for="InstructorId" /> *@
+        @*<span class="text-danger fw-bold" asp-validation-for="InstructorId"></span><br />*@
         @*the span tags display in-line validation error messages (if any)*@
 
         <label asp-for="FirstName"></label> <input asp-for="FirstName" />
@@ -51,10 +53,6 @@
 
     </form>
     
-    @*To cancel and not post anything, just go back in the browser*@
-    @*DOESN'T WORK AFTER THERE ARE VALIDATION ERRORS*@
-    @*<input type="button" value="Cancel" onclick="history.back()">*@
-
     <br>
     <a type="button" class="btn btn-primary" asp-action="Index">Back to Index</a>
 </body>
