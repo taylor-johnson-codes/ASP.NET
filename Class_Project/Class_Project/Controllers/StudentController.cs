@@ -7,7 +7,7 @@ namespace Class_Project.Controllers
     // the name StudentController comes from the Student class; just add "Controller" onto the class name
     public class StudentController : Controller  
     {
-        // inject EF/DbContext
+        // inject the Entity Framework database we created; inject the DbContext class in here
         private MyDataDbContext _context;
         public StudentController(MyDataDbContext existingContext)
         {
@@ -19,17 +19,14 @@ namespace Class_Project.Controllers
             return View(_context.Students.ToList());
         }
 
+        // display the details of one student
         public IActionResult ViewDetails(int id)
         {
             // search database for the student
-            Student student = _context.Students.FirstOrDefault(st => st.StudentId == id);
-            
-            // if NOT found
-            if (student == null)
-                return NotFound();
+            Student? student = _context.Students.FirstOrDefault(st => st.StudentId == id);  // lambda expression
+            // ? so null can be a result
 
-            // if found
-            return View();
+            return View(student);
         }
 
         // GET request to display form
@@ -45,7 +42,7 @@ namespace Class_Project.Controllers
             //without validation example
 
             // add student to database
-            _context.Students.Add(student);  // _context.Add(student);  VS knows student is Student so can leave that out
+            _context.Students.Add(student);  // alternative: _context.Add(student);  VS knows student is Student so can leave that out
             _context.SaveChanges();
 
             return RedirectToAction("Index");
@@ -66,7 +63,7 @@ namespace Class_Project.Controllers
 
         //[Route("/")]  // same as default page
         //[Route("{id}")]
-        //public IActionResult Show(int id)  // given an id parameter, normally we'd search a database, but we don't have a database yet
+        //public IActionResult ViewDetails(int id)  // given an id parameter, normally we'd search a database, but we don't have a database yet
         //{
         //    Student student = new Student();
 

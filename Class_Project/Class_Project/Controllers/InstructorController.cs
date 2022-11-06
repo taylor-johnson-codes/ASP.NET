@@ -44,8 +44,9 @@ namespace Class_Project.Controllers
         }
 
         // display the details of one instructor
-        public IActionResult ShowDetails(int id)  // eventually we will search for the id in the database
+        public IActionResult ShowDetails(int id)
         {
+            // search database for the instructor
             Instructor? oneInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
             // ? so null can be a result
 
