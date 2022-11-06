@@ -8,24 +8,24 @@ namespace Class_Project.Controllers
 {
     public class InstructorController : Controller
     {
-        // moved hard-coded data from the constructor here to the constructor in the FakeData service
-
+        // moved data from FakeData service to SeedData database
+        /*
         // inject FakeData service
-        //IFakeData _fakedata;  // local instance
-        //public InstructorController(IFakeData theFakeDataService)  // need constructor to create the instance
-        //{
-        //    _fakedata = theFakeDataService;
-        //}
+        // moved hard-coded data from the constructor here to the constructor in the FakeData service
+        IFakeData _fakedata;  // local instance
+        public InstructorController(IFakeData theFakeDataService)  // need constructor to create the instance
+        {
+            _fakedata = theFakeDataService;
+        }
+        */
 
-        // inject EF DB we created
-        // inject the DbContext class in here
+        // inject the Entity Framework database we created; inject the DbContext class in here
         private MyDataDbContext _dbContext;
         public InstructorController(MyDataDbContext dbContext)
         {
             _dbContext = dbContext;
+            // change _fakedata.InstructorsList to _dbContext.Instructors.ToList()
         }
-
-        // change _fakedata.InstructorsList to _dbContext.Instructors.ToList()
 
         // display a list of all the instructors
         public IActionResult Index()
@@ -79,8 +79,6 @@ namespace Class_Project.Controllers
         [HttpGet]  // responds to GET requests to display a pre-populated form
         public IActionResult Edit(int id)
         {
-            // when we have a database, search it for an instance with a matching id
-
             // search the list we have; "?" allows for null if not found
             Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
@@ -120,8 +118,6 @@ namespace Class_Project.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            // when we have a database, search it for an instance with a matching id
-
             // search the list we have; "?" allows for null if not found
             Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
@@ -135,8 +131,6 @@ namespace Class_Project.Controllers
         [HttpPost, ActionName("Delete")]  // this line plus changing the action name fixes the problem of having two matching action names with matching parameters
         public IActionResult PerformDelete(int id)
         {
-            // when we have a database, search it for an instance with a matching id
-
             // search the list we have; "?" allows for null if not found
             Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
