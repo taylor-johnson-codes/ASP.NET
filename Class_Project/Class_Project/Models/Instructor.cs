@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// This model is mapped to a database table via MyDataDbContext.cs in the Data folder
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Class_Project.Models
 {

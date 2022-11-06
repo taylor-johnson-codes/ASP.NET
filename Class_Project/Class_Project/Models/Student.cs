@@ -2,8 +2,9 @@
 // Models are simple POCO C# classes in .cs files
 // POCO: Plain Old CLR Objects; class that doesn't inherit functionality of any specific framework
 
-// Create a Models folder in the project
-// Right click on folder, Add Class
+// Create a Models folder in the project, right click on folder, Add Class
+
+// This model is mapped to a database table via MyDataDbContext.cs in the Data folder
 
 namespace Class_Project.Models
 {
