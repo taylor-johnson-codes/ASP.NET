@@ -20,7 +20,7 @@ builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(buil
 var app = builder.Build();  // sets up middleware components
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyDataDbContext>();  // give access to context/database for Entity Framework
-//context.Database.EnsureDeleted();  // if database exists, delete it and start with no existing DB
+context.Database.EnsureDeleted();  // if database exists, delete it and start with no pre-existing database (will start database over with our seed data)
 context.Database.EnsureCreated();  // if database doesn't exist, then create it (otherwise do nothing)
 SeedData.SeedDatabase(context);  // only call this for testing purposes; normally the client would load the database with their data
 
