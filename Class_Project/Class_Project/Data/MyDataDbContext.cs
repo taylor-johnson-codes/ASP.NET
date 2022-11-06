@@ -1,4 +1,9 @@
-﻿using Class_Project.Models;
+﻿// Steps to add Entity Framework Core to the project:
+// Installed SQLite NuGet package by clicking Tools, NuGet Package Manager, Manage NuGet Packages for Solution
+// Browse and select Microsoft.EntityFrameworkCore.Sqlite, choose the project and version, click Install
+// Now the project has many more C# classes available for use
+
+using Class_Project.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Class_Project.Data
@@ -6,8 +11,7 @@ namespace Class_Project.Data
     // my class needs to inherit the built-in DbContext class
     public class MyDataDbContext : DbContext
     {
-        // do once per project to set up
-        // create constructor that accepts parameters
+        // create constructor that accepts parameters (done once per project for set up)
         public MyDataDbContext(DbContextOptions<MyDataDbContext> options) : base(options)  // pass options to base class constructor
         {
             // nothing needed in here
@@ -15,7 +19,7 @@ namespace Class_Project.Data
         }
 
         // tables (aka entities) we want to work with
-        // each row in the table represents one instructor or one student (one entry)
+        // each row in the table represents one entry (one instructor or one student)
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
 
