@@ -104,10 +104,6 @@ namespace Class_Project.Controllers
                 foundInstr.Position = instrChanges.Position;
                 foundInstr.HireDate = instrChanges.HireDate;
             }
-            //else
-            //{
-            //    return Content("Instructor not found");
-            //}
 
             _dbContext.SaveChanges();
 
