@@ -2,6 +2,8 @@
 using Class_Project.Models;
 //using Class_Project.Services;  // moved data from FakeData service to SeedData database
 using Microsoft.AspNetCore.Mvc;
+using Class_Project.ViewModels;
+
 
 namespace Class_Project.Controllers
 {
@@ -27,9 +29,26 @@ namespace Class_Project.Controllers
         }
 
         // display a list of all the instructors
-        public IActionResult Index()
+        public IActionResult Index(string lastNameSearched)
         {
-            return View(_dbContext.Instructors.ToList());  // pass the list in this file to the view file
+            var instructors = from inst in _dbContext.Instructors
+                              select inst;  // LINQ
+
+            if (lastNameSearched != null)
+            {
+                // narrow down the results
+                instructors = instructors.Where(x => x.LastName.ToUpper() == lastNameSearched.ToUpper());
+                // alternate:
+
+            }
+
+            // view model
+            InstructorsFilterViewModel vm = new InstructorsFilterViewModel();
+            vm.FilterVM = lastNameSearched;
+            vm.InstructorsListVM = instructors.ToList();
+
+            //return View(instructors.ToList());  // pass the list in this file to the view file
+            return View(vm);
         }
 
         public IActionResult ShowAll()
