@@ -1,6 +1,6 @@
 /Test_ASP
 
-*.db
+./*.db
 *.db-shm
 *.db-wal
 
@@ -403,3 +403,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Class_Project/Class_Project/myDatabase.db
