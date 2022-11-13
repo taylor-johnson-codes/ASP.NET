@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@*To create _Layout: right-click Shared folder, Add Item, Add Razor Layout*@
+@*All of this will be displayed in all Views*@
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -13,8 +16,7 @@
     <link href="~/css/myStyle.css" rel="stylesheet" />
 </head>
 <body>
-    @*<h1>add nav bar; c/p existing nav bar here; no going to make a new one</h1>*@
-
+    @*navigation bar*@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Logo</a>
@@ -40,7 +42,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Student</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-controller="Student" asp-action="Index">Index</a></li>
-                            <li><a class="dropdown-item" asp-controller="Student" asp-action="Add" ">Add Student</a></li>
+                            <li><a class="dropdown-item" asp-controller="Student" asp-action="Add">Add Student</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -48,15 +50,15 @@
         </div>
     </nav>
 
-
     <div>
-        @*this is where your view will put its contents*@
+        @*this is where the individual views will display their unique content*@
         @RenderBody()
     </div>
 
-    @*put in fieldset tags*@
+    @*footer example*@
+    <hr />
     <div class="center"> 
-        <p>footer section</p>
+        <h4>Optional footer section from _Layout</h4>
     </div>
 </body>
 </html>

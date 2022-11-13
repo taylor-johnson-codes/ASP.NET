@@ -2,94 +2,125 @@
 @*https://www.learnrazorpages.com/razor-pages/tag-helpers/*@
 
 @*needed for passing the list from the controller; see _ViewImports.cshtml*@
-@*@model IEnumerable<Instructor>*@
-@model InstructorsFilterViewModel
 @*model needs to be all lower case here; capitalized when used below*@
+@model InstructorsFilterViewModel
+@* before creating ViewModel it was: @model IEnumerable<Instructor>*@
 
+@*@{Layout = null;  // for before we added a layout}*@
+@*@{Layout = "_Layout";  // after we added a layout, before we added this line to _ViewStart}*@
+
+@*tab title info for each layout page*@
 @{
-    //Layout = null;
-    //Layout = "_Layout";
+    ViewBag.Title = "Instructors List";
 }
-@ViewBag.Title="Index"
 
+@*for the Clear Filter button*@
 <script>
     function resetfilter(){
-        @Model.FilterVM=null;
+        document.getElementById('filter').textContent = null;  // or = "" instead of null
     }
 </script>
 
-@*<!DOCTYPE html>*@
+@*all of the standard html tags like <!DOCTYPE html> & <head> & <body> were moved to _Layout.cshtml*@
 
-@*<html>*@
-@*<head>*@
-    @*<meta name="viewport" content="width=device-width" />*@
-    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">*@
-    @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">*@
-    @*<title>Instructors List</title>*@
-@*</head>*@
-@*<body>*@
-    @*@if (Model.Count() <= 0)*@
-    @if (Model.InstructorsListVM.Count() <= 0)
-    {
-        <h1>List of Instructors</h1>
-        <h2>There are no instructors in the list.</h2>
-    }
-    else
-    {
-        @*search section:*@
-        @*get method so it stays cached in browser*@
-        <form asp-controller="Instructor" asp-action="Index" method="get">
-            <input type="text" name="LastNameSearched" placeholder="Type last name" asp-for="@Model.FilterVM" />
-            <input type="submit" value="Filter by last name" />
-        </form>
+@if (Model.InstructorsListVM.Count() <= 0)  @* before ViewModel was created: @if (Model.Count() <= 0)*@
+{
+    <h1>List of Instructors</h1>
+    <h2>There are no instructors in the list.</h2>
+    <a type="button" class="btn btn-primary" asp-action="Index">Back to Index</a>
+}
+else
+{
+    <h1>List of Instructors</h1>
+    <br />
+    @*search section:*@
+    @*get method so it stays cached in browser*@
+    <form asp-controller="Instructor" asp-action="Index" method="get">
+        <input type="text" id="filter" name="LastNameSearched" placeholder="Type last name" asp-for="@Model.FilterVM" />
+        <input type="submit" value="Click to Filter" />
+        @*clear filter:*@
+        <button onclick="document.getElementById('filter').value = null">Clear the filter</button>
+    </form>
+    <br />
 
-        @*table of all instructors:*@
-        <h1>List of Instructors</h1>
-        <table class="table table-hover table-dark w-75">
-            <thead>
-                <tr>
-                    @*The label tags (tag helpers) go along with the Display Data Annotations in the Instructor.cs model*@
+    @*table of all instructors:*@
+    <table class="table table-hover table-dark w-75">
+        <thead>
+            <tr>
+                @*The label tags (tag helpers) go along with the Display Data Annotations in the Instructor.cs model*@
 
-                    @*First() for first in list*@
-                    @*<th><label asp-for="First().FirstName"></label></th>*@
-                    @*<th><label asp-for="First().LastName"></label></th>*@
-                    @*<th><label asp-for="First().HireDate"></label></th>*@
-                    <th><label asp-for="InstructorsListVM.First().FirstName"></label></th>
-                    <th><label asp-for="InstructorsListVM.First().LastName"></label></th>
-                    <th><label asp-for="InstructorsListVM.First().HireDate"></label></th>
-                    <th>Details</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @*Model needs to be capitalized here; all lower case at the top of the file*@
-                @foreach(var instr in Model.InstructorsListVM){
-                <tr>
-                    <td>@instr.FirstName</td>
-                    <td>@instr.LastName</td>
+                @*First() for first in list*@
+                <th><label asp-for="@Model.InstructorsListVM.First().FirstName"></label></th>
+                <th><label asp-for="@Model.InstructorsListVM.First().LastName"></label></th>
+                <th><label asp-for="@Model.InstructorsListVM.First().HireDate"></label></th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*Model needs to be capitalized here; all lower case at the top of the file*@
+            @foreach(var instr in Model.InstructorsListVM){
+            <tr>
+                <td>@instr.FirstName</td>
+                <td>@instr.LastName</td>
 
-                    @*displays date WITH time*@
-                    @*<td>@instr.HireDate</td>*@
+                @*displays date WITH time*@
+                @*<td>@instr.HireDate</td>*@
 
-                    @*displays date WITHOUT time*@
-                    <td>@Html.DisplayFor(model => instr.HireDate)</td>
+                @*displays date WITHOUT time*@
+                <td>@Html.DisplayFor(model => instr.HireDate)</td>
 
-                    @*HTML helper example for link:*@
-                    @*<td>@Html.ActionLink("Show Details", "ShowDetails", new {id = instr.InstructorId})</td>*@
+                @*HTML helper example for link:*@
+                @*<td>@Html.ActionLink("Show Details", "ShowDetails", new {id = instr.InstructorId})</td>*@
 
-                    @*Tag helper example for link:*@
-                    <td><a asp-action="ShowDetails" asp-route-id="@instr.InstructorId">Show Details</a></td>
-                    <td><a asp-action="Edit" asp-route-id="@instr.InstructorId">Edit Instructor</a></td>
-                    <td><a asp-action="Delete" asp-route-id="@instr.InstructorId">Delete Instructor</a></td>
-                </tr>
-                }
-            </tbody>
-        </table>
+                @*Tag helper example for link:*@
+                <td><a asp-action="ShowDetails" asp-route-id="@instr.InstructorId">Show Details</a></td>
+                <td><a asp-action="Edit" asp-route-id="@instr.InstructorId">Edit Instructor</a></td>
+                <td><a asp-action="Delete" asp-route-id="@instr.InstructorId">Delete Instructor</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
 
-        @*clicking the link will call the Add() action in the controller*@
-        @*<a asp-action="Add">Add Instructor</a>*@
-        <a type="button" class="btn btn-primary" asp-action="Add">Add Instructor</a>
-    }
-@*</body>*@
-@*</html>*@
+    @*clicking the link will call the Add() action in the controller*@
+    @*<a asp-action="Add">Add Instructor</a>*@
+    <a type="button" class="btn btn-primary" asp-action="Add">Add Instructor</a>
+
+    <hr />
+
+    <h1 class="center">Card Deck Example</h1>
+    <div class="container w-50">
+        <div class="row">
+            @foreach (var inst in Model.InstructorsListVM)
+            {
+                <div class="col">
+                    <div class="card" style="width:250px">
+                        <img class="card-img-top" src="https://picsum.photos/200/300" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title">@inst.FirstName @inst.LastName</h4>
+                            <class="card-text">
+                            <label asp-for="@Model.InstructorsListVM.First().InstructorId"></label>: @inst.InstructorId<br>
+                            <label asp-for="@Model.InstructorsListVM.First().IsTenured"></label> @inst.IsTenured<br>
+                            <label asp-for="@Model.InstructorsListVM.First().Position"></label>: @inst.Position<br>
+                            <br>
+                            <a asp-action="Edit" asp-route-id="@inst.InstructorId" class="btn btn-primary">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+        
+    @*fieldset example*@
+    <h1>Fieldset Example</h1>
+    <fieldset class="border p-2 w-25">
+        <div class="center">
+            <a href="https://moodle.stmartin.edu/">Go to Moodle</a><br>
+            <a href="https://moodle.stmartin.edu/">Go to Moodle</a><br>
+            <a href="https://moodle.stmartin.edu/">Go to Moodle</a>
+        </div>
+    </fieldset>
+}

@@ -4,7 +4,6 @@ using Class_Project.Models;
 using Microsoft.AspNetCore.Mvc;
 using Class_Project.ViewModels;
 
-
 namespace Class_Project.Controllers
 {
     public class InstructorController : Controller
@@ -34,20 +33,21 @@ namespace Class_Project.Controllers
             var instructors = from inst in _dbContext.Instructors
                               select inst;  // LINQ
 
+            // narrow down the results
             if (lastNameSearched != null)
             {
-                // narrow down the results
-                instructors = instructors.Where(x => x.LastName.ToUpper() == lastNameSearched.ToUpper());
-                // alternate:
-
+                // filter for exact last name all spelled out
+                //instructors = instructors.Where(x => x.LastName.ToUpper() == lastNameSearched.ToUpper());  // ToUpper so it's not case-sensitive
+                // filter for a few letters, not full last name:
+                instructors = instructors.Where(x => x.LastName.ToUpper().Contains(lastNameSearched.ToUpper()));
             }
 
-            // view model
+            // ViewModel from ViewModels folder
             InstructorsFilterViewModel vm = new InstructorsFilterViewModel();
             vm.FilterVM = lastNameSearched;
             vm.InstructorsListVM = instructors.ToList();
 
-            //return View(instructors.ToList());  // pass the list in this file to the view file
+            // displays all instructors if there's no filter query; other shows filtered results
             return View(vm);
         }
 
