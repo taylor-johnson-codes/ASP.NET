@@ -47,7 +47,7 @@ namespace Class_Project.Controllers
             vm.FilterVM = lastNameSearched;
             vm.InstructorsListVM = instructors.ToList();
 
-            // displays all instructors if there's no filter query; other shows filtered results
+            // displays all instructors if there's no filter query; otherwise shows filtered results
             return View(vm);
         }
 
