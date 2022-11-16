@@ -20,12 +20,23 @@ builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(buil
 var app = builder.Build();  // sets up middleware components
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyDataDbContext>();  // give access to context/database for Entity Framework
-context.Database.EnsureDeleted();  // if database exists, delete it and start with no pre-existing database (will start database over with our seed data)
+//context.Database.EnsureDeleted();  // if database exists, delete it and start with no pre-existing database (will start database over with our seed data)
 context.Database.EnsureCreated();  // if database doesn't exist, then create it (otherwise do nothing)
 SeedData.SeedDatabase(context);  // only call this for testing purposes; normally the client would load the database with their data
 
 //app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
 // not needed after upgrading project to MVC
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();  // show all details for errors
+}
+else
+{
+    app.UseExceptionHandler("/Instructor/Error");  // show the friendly page; hide all details
+    app.UseStatusCodePagesWithRedirects("/Instructor/Error");
+}
 
 app.UseStaticFiles();  // to enable the use of static files
                        // static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
@@ -58,11 +69,11 @@ app.MapControllerRoute(
 //    );
 
 // always put the final "catch all" route at the bottom
-app.MapControllerRoute(
-    name: "catchAll",
-    pattern: "{*whatever}",
-    defaults: new { controller = "Student", action = "Index" }
-    );
+//app.MapControllerRoute(
+//    name: "catchAll",
+//    pattern: "{*whatever}",
+//    defaults: new { controller = "Student", action = "Index" }
+//    );
 
 app.Run();
 

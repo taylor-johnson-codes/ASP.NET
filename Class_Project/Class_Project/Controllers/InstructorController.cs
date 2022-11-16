@@ -68,6 +68,15 @@ namespace Class_Project.Controllers
             Instructor? oneInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
             // ? so null can be a result
 
+            // if instructor was found and does have an image saved in the database
+            if (oneInstr!=null && oneInstr.ImageDataForInst!=null)  
+            {
+                // convert the image bytes to base 64
+                string imageBase64Data = Convert.ToBase64String(oneInstr.ImageDataForInst);
+                string imageDataURL = string.Format($"data:image/jpeg;base64,{imageBase64Data}");
+                ViewBag.ImageURL = imageDataURL;
+            }
+
             return View(oneInstr);  // return the result via a view
         }
 
@@ -89,6 +98,14 @@ namespace Class_Project.Controllers
             if (!ModelState.IsValid)
                 return View();
 
+            // pick up the image file and convert/save in a byte[]
+            foreach (var file in Request.Form.Files)  // there will only be one image
+            {
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                instr.ImageDataForInst = ms.ToArray();  // save the bytes from the file
+            }
+
             // if ModelState IS valid, add, and return to Index view
             _dbContext.Instructors.Add(instr);  // add the new instructor to the full list of instructors
             _dbContext.SaveChanges();  // must be called to save change to database
@@ -101,7 +118,10 @@ namespace Class_Project.Controllers
             // search the list we have; "?" allows for null if not found
             Instructor? foundInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // or (instr => instr.InstructorId.Equals(id))
 
-            return View(foundInstr);
+            if (foundInstr!=null)
+                return View(foundInstr);
+            else
+                return NotFound();
         }
 
         [HttpPost]  // this view will be shown only in response to a POST request, not a get request
@@ -155,6 +175,12 @@ namespace Class_Project.Controllers
 
             // return user to Index view
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Error()
+        {
+            //return Content("Friendly error page");
+            return View();
         }
     }
 }

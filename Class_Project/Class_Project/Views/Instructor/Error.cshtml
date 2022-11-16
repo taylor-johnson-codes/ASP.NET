@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Error Page";
+}
+
+<h1>Custom Error Page</h1>
+<h2>There's been an error.</h2>
+
+@{
+    Random random = new Random();
+    int x = random.Next(1, 5);
+    //string path = "/images/randomDefault" + x + ".jpg";
+    string path = string.Format($"/images/randomDefault{x}.jpg");
+}
+    
+<img src="@path" class="img-thumbnail" />
+

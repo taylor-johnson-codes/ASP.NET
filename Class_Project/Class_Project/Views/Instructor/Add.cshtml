@@ -23,7 +23,7 @@
     <div class="text-danger fw-bold" asp-validation-summary="All"></div>
 
     @*Send a post request to the Add action that accepts post requests*@
-    <form asp-action="Add" method="post">
+    <form asp-action="Add" method="post" enctype="multipart/form-data">
         @*Input elements capture the users input*@
 
         @*ID not needed after implementing SQLite database; it will add ID automatically*@
@@ -53,6 +53,11 @@
         @*Submit data to server (button needs to be inside form tags to work)*@
         <input class="btn btn-success" type="submit" value="Save This Instructor" />
 
+        <br />
+        <br />
+        <input type="file" name="ImageData"/>
+        <br />
+        <br />
     </form>
     
     <br>

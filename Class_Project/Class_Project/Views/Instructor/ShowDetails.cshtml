@@ -32,7 +32,16 @@
 
         <h3>Bootstrap Card Example</h3>
         <div class="card bg-info" style="width:300px">
-            <img class="card-img-top" src="https://picsum.photos/200" alt="image placeholder" style="width:100%">
+            @if (@ViewBag.ImageURL!=null)
+            {
+                @*display database image*@
+                <img class="card-img-top rounded-circle" src="@ViewBag.ImageURL" alt="image placeholder" style="width:100%">
+            }
+            else
+            {
+                @*display default image*@
+                <img class="card-img-top rounded-circle" src="~/images/defaultPersonImage.png" alt="image placeholder" style="width:100%">
+            }
             <div class="card-body">
                 <h4 class="card-title">@Model.FirstName @Model.LastName</h4>
                 <p>

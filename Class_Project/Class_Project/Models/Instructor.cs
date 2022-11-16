@@ -46,5 +46,9 @@ namespace Class_Project.Models
         [Display(Name = "Hire Date")]
         [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }
+
+        [Display(Name = "Instructor photo")]
+        public byte[]? ImageDataForInst { get; set; }
+        // ? allows for null
     }
 }
