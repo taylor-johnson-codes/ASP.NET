@@ -32,14 +32,13 @@
 
         <h3>Bootstrap Card Example</h3>
         <div class="card bg-info" style="width:300px">
+            @*if an image is saved in the database, display it, otherwise display the default image*@
             @if (@ViewBag.ImageURL!=null)
             {
-                @*display database image*@
                 <img class="card-img-top rounded-circle" src="@ViewBag.ImageURL" alt="image placeholder" style="width:100%">
             }
             else
             {
-                @*display default image*@
                 <img class="card-img-top rounded-circle" src="~/images/defaultPersonImage.png" alt="image placeholder" style="width:100%">
             }
             <div class="card-body">

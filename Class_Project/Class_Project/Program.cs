@@ -27,7 +27,8 @@ SeedData.SeedDatabase(context);  // only call this for testing purposes; normall
 //app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
 // not needed after upgrading project to MVC
 
-
+// if the app is in dev mode, show detailed errors
+// if the app is any other mode (e.g. production mode), show a friendly error page without details of the error
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();  // show all details for errors
@@ -68,6 +69,7 @@ app.MapControllerRoute(
 //    defaults: new { controller = "Student", action = "Show" }
 //    );
 
+// commented out this catchAll route after adding the if/else block for errors above app.UseStaticFiles();
 // always put the final "catch all" route at the bottom
 //app.MapControllerRoute(
 //    name: "catchAll",

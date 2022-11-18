@@ -68,10 +68,10 @@ namespace Class_Project.Controllers
             Instructor? oneInstr = _dbContext.Instructors.FirstOrDefault(instr => instr.InstructorId == id);  // lambda expression
             // ? so null can be a result
 
-            // if instructor was found and does have an image saved in the database
+            // if the instructor was found and does have an image saved in the database, to be able to display the image in a view, 
+            // convert the byte array from the database into a Base64 encoded string (which will form an "Image Data URL") and put it in the ViewBag
             if (oneInstr!=null && oneInstr.ImageDataForInst!=null)  
             {
-                // convert the image bytes to base 64
                 string imageBase64Data = Convert.ToBase64String(oneInstr.ImageDataForInst);
                 string imageDataURL = string.Format($"data:image/jpeg;base64,{imageBase64Data}");
                 ViewBag.ImageURL = imageDataURL;
@@ -98,12 +98,13 @@ namespace Class_Project.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            // pick up the image file and convert/save in a byte[]
-            foreach (var file in Request.Form.Files)  // there will only be one image
+            // get the uploaded file data (if any) and convert it to a byte array via memory stream
+            // if a file is uploaded, it will show in DB Browser as "BLOB" (binary large object)
+            foreach (var file in Request.Form.Files)  // there will only be one image for "file"
             {
                 MemoryStream ms = new MemoryStream();
                 file.CopyTo(ms);
-                instr.ImageDataForInst = ms.ToArray();  // save the bytes from the file
+                instr.ImageDataForInst = ms.ToArray();
             }
 
             // if ModelState IS valid, add, and return to Index view
