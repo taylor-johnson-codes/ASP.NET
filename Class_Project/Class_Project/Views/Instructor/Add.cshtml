@@ -23,6 +23,7 @@
     <div class="text-danger fw-bold" asp-validation-summary="All"></div>
 
     @*Send a post request to the Add action that accepts post requests*@
+    @*enctype is for uploading images*@
     <form asp-action="Add" method="post" enctype="multipart/form-data">
         @*Input elements capture the users input*@
 
@@ -50,14 +51,12 @@
         <label asp-for="HireDate"></label> <input asp-for="HireDate" />
         <span class="text-danger fw-bold" asp-validation-for="HireDate"></span><br />
 
+        @*creates an area for the user to upload an image*@
+        <label>Upload instructor's photo</label>
+        <input type="file" name="ImageData"/>
+
         @*Submit data to server (button needs to be inside form tags to work)*@
         <input class="btn btn-success" type="submit" value="Save This Instructor" />
-
-        <br />
-        <br />
-        <input type="file" name="ImageData"/>
-        <br />
-        <br />
     </form>
     
     <br>
