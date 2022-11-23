@@ -1,11 +1,11 @@
-﻿namespace Class_Project.Models
-{
-    public class User
-    {
-        // haven't used this class yet
+﻿using Microsoft.AspNetCore.Identity;  // for inheriting built-in IdentityUser class
 
-        //public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+namespace Class_Project.Models
+{
+    public class User : IdentityUser
+    // Ctrl+click to see what's built-in to IdentityUser class; it has ID built-in
+    {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
     }
 }

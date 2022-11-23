@@ -5,12 +5,18 @@
 
 using Class_Project.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;  // for IdentityDbContext<User>
 
 namespace Class_Project.Data
 {
+    // before implementing users with IdentityDbContext:
+    /*
     // my class needs to inherit the built-in DbContext class
     // this class is used in the "context" variable in Program.cs
-    public class MyDataDbContext : DbContext
+    // public class MyDataDbContext : DbContext
+    */
+
+    public class MyDataDbContext : IdentityDbContext<User>  // need to install Identity NuGet package to use built-in IdentityDbContext class
     {
         // create constructor that accepts parameters (done once per project for set up)
         public MyDataDbContext(DbContextOptions<MyDataDbContext> options) : base(options)  // pass options to base class constructor

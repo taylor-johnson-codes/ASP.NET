@@ -6,7 +6,9 @@
 
 using Class_Project.Data;
 using Class_Project.Models;
+using Microsoft.AspNetCore.Identity;  // for builder.Services.AddIdentity
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 //using Class_Project.Services;  // moved data from FakeData service to SeedData database
 
 var builder = WebApplication.CreateBuilder(args);  // sets up the basic features of the ASP.NET Core platform
@@ -15,14 +17,27 @@ builder.Services.AddControllersWithViews();  // for adding MVC into the project
 //builder.Services.AddSingleton<IFakeData, FakeData>();  // for adding my hard-coded data as a service (later moved data from FakeData service to SeedData database)
 //builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite("someDB.db"));  // for Entity Framework - will have to  re-compile to change DB
 builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("MyConnectionString")));  // for EF Core to change database without re-compiling code
-    // the connection string comes from appsettings.json
+                                                                                                                                                // the connection string comes from appsettings.json
+// for EF Core Identity (need to install with NuGet package)
+builder.Services.AddDefaultIdentity<User>(  // user User class that I made
+//builder.Services.AddIdentity<User, IdentityRole>(
+    options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireDigit = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireLowercase = true;
+        options.User.RequireUniqueEmail = true;
+    }
+    ).AddEntityFrameworkStores<MyDataDbContext>();  // use the DbContext class I made
 
 var app = builder.Build();  // sets up middleware components
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<MyDataDbContext>();  // give access to context/database for Entity Framework
 //context.Database.EnsureDeleted();  // if database exists, delete it and start with no pre-existing database (will start database over with our seed data)
 context.Database.EnsureCreated();  // if database doesn't exist, then create it (otherwise do nothing)
-SeedData.SeedDatabase(context);  // only call this for testing purposes; normally the client would load the database with their data
+//SeedData.SeedDatabase(context);  // only call this for testing purposes; normally the client would load the database with their data
 
 //app.UseDefaultFiles();  // needed to serve the default.html file in the wwwroot folder
 // not needed after upgrading project to MVC
@@ -43,6 +58,8 @@ app.UseStaticFiles();  // to enable the use of static files
                        // static files don't change at run time (e.g. wwwroot folder: HTML, CSS, image, JavaScript files)
                        // wwwroot is just a folder known as the project's web root directory
 
+app.UseAuthentication();  // for EF Core Identity (need to install with NuGet package)
+
 // The following code is adding MVC into the project with conventional routing
 
 // Conventional routing is defined in Program.cs for one central location
@@ -51,6 +68,8 @@ app.UseStaticFiles();  // to enable the use of static files
 // Conventional routing is shown below and is what we'll use; examples of attribute routing for learning purposes is shown in StudentController.cs
 
 app.UseRouting();  // routing maps requests to actions
+
+app.UseAuthorization();  // for EF Core Identity (need to install with NuGet package)
 
 // default route:
 // with this syntax, if "controller" is spelled wrong, there WON'T be a compiler error
