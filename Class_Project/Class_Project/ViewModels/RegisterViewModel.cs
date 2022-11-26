@@ -16,6 +16,6 @@ namespace Class_Project.ViewModels
         public string? Email { get; set; }
 
         [Display(Name = "Phone number")]
-        public string? Phone { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

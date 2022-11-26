@@ -73,7 +73,7 @@ namespace Class_Project.Controllers
                 newUser.LastName= userInput.LastName;
                 newUser.UserName= userInput.UserName;
                 newUser.Email= userInput.Email;
-                newUser.PhoneNumber = userInput.Phone;  // UPDATE SO THEY'RE BOTH JUST PHONE
+                newUser.PhoneNumber = userInput.PhoneNumber;
 
                 // attempt to register with password
                 var result = await _userManager.CreateAsync(newUser, userInput.Password);
