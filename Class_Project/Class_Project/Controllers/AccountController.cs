@@ -52,7 +52,7 @@ namespace Class_Project.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Instructor");  // redirect to any publically accessible page
+            return RedirectToAction("Index", "Instructor");  // redirect to any publicly accessible page
         }
 
         // register form 
