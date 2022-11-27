@@ -6,13 +6,13 @@
 
 <h1>Register New User</h1>
 <form asp-action="Register">
-    <div asp-validation-summary="All"></div>
     <label asp-for="FirstName"></label> <input asp-for="FirstName" /> <br />
     <label asp-for="LastName"></label> <input asp-for="LastName" /> <br />
     <label asp-for="UserName"></label> <input asp-for="UserName" /> <br />
     <label asp-for="Password"></label> <input asp-for="Password" /> <br />
     <label asp-for="Email"></label> <input asp-for="Email" /> <br />
     <label asp-for="PhoneNumber"></label> <input asp-for="PhoneNumber" /> <br />
+    <div asp-validation-summary="All" class="text-danger"></div>
     <input type="submit" value="Register Now" />
 </form>
 <br />
