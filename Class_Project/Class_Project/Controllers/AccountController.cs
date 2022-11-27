@@ -8,14 +8,17 @@ namespace Class_Project.Controllers
     public class AccountController : Controller
     {
         // EF Core Identity needs to be installed with NuGet package and code needs to be added to Program.cs for it
+        // This controller works with the User class
 
-        // inject services from Program.cs
+        // inject services
         private SignInManager<User> _signInManager;  // null reference 
-        private UserManager<User> _userManager;  // null reference 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager)
+        private UserManager<User> _userManager;
+        private ILogger<AccountController> _logger;
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, ILogger<AccountController> logger)
         {
             _signInManager = signInManager;  // populated reference
-            _userManager = userManager;  // populated reference
+            _userManager = userManager;
+            _logger = logger;
         }
 
         // log in form
@@ -79,7 +82,11 @@ namespace Class_Project.Controllers
                 var result = await _userManager.CreateAsync(newUser, userInput.Password);
 
                 if (result.Succeeded)
+                {
+                    _logger.LogInformation("Registered Successfully!");
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
                     return RedirectToAction("Index", "Instructor");
+                }
                 else
                 {
                     foreach (var error in result.Errors)
