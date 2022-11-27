@@ -1,8 +1,9 @@
 ﻿using Class_Project.Data;
 using Class_Project.Models;
-//using Class_Project.Services;  // moved data from FakeData service to SeedData database
 using Microsoft.AspNetCore.Mvc;
 using Class_Project.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+//using Class_Project.Services;  // moved data from FakeData service to SeedData database
 
 namespace Class_Project.Controllers
 {
@@ -81,6 +82,7 @@ namespace Class_Project.Controllers
         }
 
         [HttpGet]  // responds to GET requests to display form
+        [Authorize]  // user needs to be logged in
         public IActionResult Add()
         {
             return View();
@@ -92,6 +94,7 @@ namespace Class_Project.Controllers
         // 3rd: Data is converted to .NET types when needed
 
         [HttpPost]  // this view will be shown only in response to a POST request, not a get request
+        [Authorize]  // user needs to be logged in
         public IActionResult Add(Instructor instr)
         {
             // if ModelState is NOT valid, don't add, and return to Add view
@@ -114,6 +117,7 @@ namespace Class_Project.Controllers
         }
 
         [HttpGet]  // responds to GET requests to display a pre-populated form
+        [Authorize]  // user needs to be logged in
         public IActionResult Edit(int id)
         {
             // search the list we have; "?" allows for null if not found
@@ -126,6 +130,7 @@ namespace Class_Project.Controllers
         }
 
         [HttpPost]  // this view will be shown only in response to a POST request, not a get request
+        [Authorize]  // user needs to be logged in
         public IActionResult Edit(Instructor instrChanges)
         {
             // if ModelState is NOT valid, don't edit, and return to Edit view to display errors
@@ -152,6 +157,7 @@ namespace Class_Project.Controllers
 
         // confirm the user wants to delete the instructor
         [HttpGet]
+        [Authorize]  // user needs to be logged in
         public IActionResult Delete(int id)
         {
             // search the list we have; "?" allows for null if not found
@@ -165,6 +171,7 @@ namespace Class_Project.Controllers
 
         // perform delete request
         [HttpPost, ActionName("Delete")]  // this line plus changing the action name fixes the problem of having two matching action names with matching parameters
+        [Authorize]  // user needs to be logged in
         public IActionResult PerformDelete(int id)
         {
             // search the list we have; "?" allows for null if not found

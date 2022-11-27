@@ -6,7 +6,7 @@
 
 using Class_Project.Data;
 using Class_Project.Models;
-using Microsoft.AspNetCore.Identity;  // for builder.Services.AddIdentity
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 //using Class_Project.Services;  // moved data from FakeData service to SeedData database
@@ -19,8 +19,8 @@ builder.Services.AddControllersWithViews();  // for adding MVC into the project
 builder.Services.AddDbContext<MyDataDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("MyConnectionString")));  // for EF Core to change database without re-compiling code
                                                                                                                                                 // the connection string comes from appsettings.json
 // for EF Core Identity (need to install with NuGet package)
-builder.Services.AddDefaultIdentity<User>(  // user User class that I made
-//builder.Services.AddIdentity<User, IdentityRole>(
+//builder.Services.AddDefaultIdentity<User>(  // User class that I made; this is for authentication only, not authorization
+builder.Services.AddIdentity<User, IdentityRole>(  // this is for authentication and authorization
     options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
