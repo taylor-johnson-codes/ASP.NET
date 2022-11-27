@@ -10,7 +10,7 @@ namespace Class_Project.Controllers
         // EF Core Identity needs to be installed with NuGet package and code needs to be added to Program.cs for it
         // This controller works with the User class
 
-        // inject services
+        // inject services (for logging in/out, registering new user, and auto-login after registering new user)
         private SignInManager<User> _signInManager;  // null reference 
         private UserManager<User> _userManager;
         private ILogger<AccountController> _logger;
@@ -29,10 +29,11 @@ namespace Class_Project.Controllers
             {
                 RedirectToAction("Index", "Instructor");
             }
+
             return View();  // login form
         }
 
-        // perform login
+        // perform login with _signInManager
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel userInput)  // Task<> for async; async since it might take a while
         {
@@ -51,7 +52,7 @@ namespace Class_Project.Controllers
             return View(userInput);
         }
 
-        // log out
+        // log out with _signInManager
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -64,7 +65,7 @@ namespace Class_Project.Controllers
             return View();
         }
 
-        // perform registration
+        // perform registration with _userManager; auto-login with _logger
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel userInput)
         {
